@@ -1,29 +1,70 @@
+html {
+  font-size: 18px;
+}
+body {
+  background-color: #fff;
+  color: #2a2a2a;
+}
+p {
+  line-height: 1.8;
+}
+a {
+  text-decoration: none;
+  border-bottom: 2px solid #f06;
+  color: #2a2a2a;
+}
+a:visited,
+a:hover {
+  color: #2a2a2a;
+}
 .intro {
   margin: 5rem auto;
 }
 .intro__hed {
   max-width: 55rem;
-  margin: 0 auto 4rem auto;
-  padding: 0 1rem;
+  margin: 0 auto;
+  font-size: 2rem;
+  margin-bottom: 4rem;
   text-align: center;
-  font-size: 32px;
-  line-height: 1.2;
 }
 .intro__byline {
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 0.85rem;
   text-align: center;
   margin-bottom: 1rem;
-  padding: 0 1rem;
 }
 .intro__dek {
+  font-size: 1.1rem;
   max-width: 25rem;
   margin: 0 auto;
-  padding: 0 1rem;
-  font-size: 18px;
-  line-height: 1.5;
+}
+@media only screen and (min-width: 25em) {
+  .hack {
+    display: none;
+  }
+}
+@media only screen and (min-width: 40em) {
+  .hack {
+    display: none;
+  }
+}
+@media only screen and (min-width: 50em) {
+  .hack {
+    display: none;
+  }
+  .intro__hed {
+    font-size: 4rem;
+  }
+}
+@media only screen and (min-width: 60em) {
+  .hack {
+    display: none;
+  }
 }
 
+
+/* STORY */
+
+/* russ */
 main {
   padding: 0 0.75rem;
 }
@@ -66,12 +107,17 @@ main {
   background: red;
 }
 
-.chart__gender .fifty-percent {
+.chart__gender .fifty-percent-line {
   fill: none;
   stroke: #fff;
   stroke-opacity: 0.5;
   stroke-width: 1px;
   stroke-dasharray: 4px 4px;
+}
+
+.chart__gender .fifty-percent-label {
+  fill: #fff;
+  font-size: 12px;
 }
 
 .chart__gender .vertical {
@@ -107,6 +153,11 @@ main {
 .chart__gender svg {
 }
 
+.legend-container text {
+  padding: 1rem;
+  font-size: 12px;
+}
+
 .toggle {
   margin: 1rem auto;
   text-align: center;
@@ -130,7 +181,7 @@ main {
 }
 
 
-.tooltip {
+div.tooltip {
   position: absolute;
   text-align: left;
   padding: 6px;
@@ -150,17 +201,4 @@ main {
 
 .story__text p {
   margin-bottom: 1.5rem;
-}
-
-@media only screen and (min-width: 40em) {
-  .intro__hed {
-    font-size: 48px;
-    line-height: 1.2;
-  }
-}
-@media only screen and (min-width: 50em) {
-  .intro__hed {
-    font-size: 64px;
-    line-height: 1.2;
-  }
 }

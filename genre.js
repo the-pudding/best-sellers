@@ -3,7 +3,7 @@
 	//VARS
 	var genreData = null;
 	var scales = {};
-	var margin = { top:10, bottom:25, left:50, right:10 }
+	var margin = { top:10, bottom:25, left:50, right:120 }
 	var ratio = 1.5;
 	var stack = d3.stack();
 	var transitionDuration = 1000;
@@ -22,12 +22,22 @@
 			return +row[columName];
 		})
 
+		var genre_values = columns.map(function(columName) {
+			if(columName!="Literary/None"){
+				return +row[columName];
+			}
+		})
+
 		target.total = d3.sum(values)
+		target.genre_total = d3.sum(genre_values)
 
 		// create columns with number values
 		columns.forEach(function(columName, i) {
 			target[columName + '_count'] = values[i];
 			target[columName + '_percent'] = values[i] / target.total;
+			if(columName!="Literary/None"){
+				target[columName + '_genrePercent'] = values[i] / target.genre_total;
+			}
 		});
 
 		// update date
@@ -69,13 +79,26 @@
 
 		scales.percent = {x:percentX, y:percentY}
 
+		var genrePX = d3.scaleTime()
+			.domain(d3.extent(genreData, function(d) { return d.dateParsed; }));
+
+		var genrePY = d3.scaleLinear()
+
+		scales.genrePercent = {x:genrePX, y:genrePY}
 
 
 		scales.color = d3.scaleOrdinal(d3.schemeCategory20).domain(keys)
 	}
 
 	function setupElements() {
+		svg.append("g")
+	      .attr("class", "legend-container")
+	      .append("g")
+	      .attr("class", "legendOrdinal");
+	      
 		var g = svg.select('.container');
+
+		g.append('g').attr('class', 'area-container');
 
 		g.append('g')
 			.attr('class', 'axis axis--x');
@@ -106,9 +129,45 @@
 			.call(d3.axisLeft(scales[state].y).ticks(10))
 	}
 
+	function drawLegend(width,height) {
+		console.log(width)
+		svg.select(".legend-container")
+			.attr("visibility","visible")
+		  .attr("width",margin.right)
+		  .attr("height",height)
+	      .attr("transform", "translate("+(width+margin.left+20)+","+(height/4+margin.top)+")")
+
+		var legendOrdinal = d3.legendColor()
+	        .shape("path", d3.symbol().type(d3.symbolSquare).size(150)())
+	        .shapePadding(10)
+	  //use cellFilter to hide the "e" cell
+	        .cellFilter(function(d){ 
+	        	return d.label !== "e" 
+	        })
+	        .scale(scales.color)
+	        .ascending(true);
+
+	    console.log("legend",legendOrdinal)
+		svg.select(".legendOrdinal")
+		    .call(legendOrdinal);
+	}
+
 	function updateChart() {
 		var svg_width = chart.node().offsetWidth
 		var svg_height =  Math.floor(svg_width / ratio)
+
+		margin.right = 120
+		var useLegend = true
+		if(margin.right>=svg_width/6){
+			console.log("removing legend")
+			margin.right = 10
+			useLegend = false
+			svg.select(".legend-container")
+				.attr("visibility","hidden")
+		}
+		console.log("svg_width",svg_width)
+		console.log("margin.right",margin.right)
+
 
 		var width = svg_width - margin.left - margin.right;
 		var height = svg_height - margin.top - margin.bottom;
@@ -142,8 +201,9 @@
 
 		// redraw elements
 		drawAxes(height)
+		var container = chart.select('.area-container')
 
-		var layer = g.selectAll('.area')
+		var layer = container.selectAll('.area')
 			.data(stackedData)
 
 		layer.exit().remove()
@@ -161,6 +221,9 @@
 	      		var key = d.key.split('_')[0]
 	      		return scales.color(key);
 	      	})
+	    if(useLegend === true){
+		    drawLegend(width,height)
+		}
 	}
 
 	function handleToggle() {
@@ -180,6 +243,7 @@
 
 	function init() {
 		loadData(function() {
+			console.log(genreData)
 			setupElements()
 			setupScales()
 			resize() // draw chart

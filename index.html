@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang='en' data-version='1493580156313'>
+<html lang='en' data-version='1492722223475'>
 <head>
 
-	<title>Bias, she wrote</title>
+	<title>Bias, She Wrote</title>
 	<meta charset='utf-8'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -28,13 +28,10 @@
 	<meta name='twitter:description' content='tk'>
 	<meta name='twitter:image:src' content='tk'>	
 	<!-- smoosh -->
-	
+	<link rel='stylesheet' href='critical.css' />
 	<!-- endsmoosh -->
 	
-	
-	<link rel="stylesheet" href="critical.css" />
 	<link rel="stylesheet" href="bundle.css" />
-		
 	
 	<style>                     
 	/*
@@ -209,7 +206,7 @@
 			<p class='intro__dek'>How much progress has American literature really made towards gender equality?</p>
 		</div>
 		<div class='story__text'>
-			<p>Shirley Jackson was one of the literary superstars of the 1940s, 50s and 60s. Today her work is considered classic, but she was also successful in her lifetime. She won awards, including the O’Henry and Best American Short Stories, wrote 17 books, and had her work adapted for television, film, and the ballet.</p>
+			<p>Shirley Jackson was one of the literary superstars of the 1940s, 50s and 60s. Today her work is considered classic, but she was also successful in her lifetime. She wrote 17 books, won awards, and had her work adapted for television, film, and the ballet.</p>
 
 			<p>Jackson was also a woman, wife, and mother. In the 1950s, this came with an obvious downside. When Jackson went into the hospital to deliver her third child, she had the following exchange with the receptionist filling out her form:</p>
 
@@ -262,6 +259,10 @@
 				<li>
 					<button class='toggle__button is-active' value='percent'>Percent</button>
 				</li>
+				<li>
+					<button class='toggle__button is-active' value='genrePercent'>Genres only</button>
+				</li>
+			</ul>
 			</ul>
 		</div>
 		<div class='story__text'>
@@ -273,10 +274,11 @@
 
 
 	<script src='d3.v4.min.js'></script>
+	<script src='d3-legend.min.js'></script>
+	
 	<script src='gender.js'></script>
-	<!-- <script src='genre.js'></script> -->
+	<script src='genre.js'></script>
 	<!-- <script src='smult.js'></script> -->
-
 
 	<!-- <script src='https://pudding.cool/assets/scripts/pudding-footer.js' async></script> -->
 </body>

@@ -102,10 +102,10 @@
 			.text("Women");
 
 		g.append("line")
-			.attr("class","fifty-percent")
+			.attr("class","fifty-percent fifty-percent-line")
 
 		g.append("text")
-			.attr("class","fifty-percent-label")
+			.attr("class","fifty-percent fifty-percent-label")
 			.text("Gender Equality (50%)")
 
 	}
@@ -124,10 +124,11 @@
 			.attr("transform", "translate(0," + height + ")")
 			.call(d3.axisBottom(scales[state].x))
 
+		var yaxis = state === "percent" ? d3.axisLeft(scales[state].y).ticks(10,"%"):d3.axisLeft(scales[state].y).ticks(10)
 		g.select(".axis--y")
 			.transition()
 			.duration(transitionDuration)
-			.call(d3.axisLeft(scales[state].y).ticks(10))
+			.call(yaxis)
 	}
 
 	function xToD(x,data){
@@ -231,6 +232,8 @@
        		.style("top",  yOff + "px");
 	}
 
+//Should the tooltip go away when you leave the chart?
+//I think it should.
 	function handleMouseOut() {
 		// chart.select(".vertical")
 		// 	.transition()
@@ -301,20 +304,22 @@
 
 	    console.log("1950",(d3.timeParse("%Y")("1950")))
 
-	    var opacity = state === 'percent' ? 1 : 0;
-      	g.select(".fifty-percent")
+	    //drawFiftyPercent()
+
+	    var opacity = state === 'percent' ? 0.5 : 0;
+      	g.select(".fifty-percent-line")
       		.attr("x1",scales["percent"].x(d3.timeParse("%Y")("1950")))
         	.attr("y1",scales["percent"].y(.5))
         	.attr("x2",scales["percent"].x(d3.timeParse("%Y")("2017")))
         	.attr("y2",scales["percent"].y(.5))
-      		.transition()
-      		.duration(transitionDuration)
-      		.style("opacity",opacity)
 
       	g.select(".fifty-percent-label")
-      		.attr("x",width/2)
-      		.attr("y",scales["percent"].y(.5))
-      		.attr("text-anchor","middle")
+      		.attr("x",width/10)
+      		.attr("y",(scales["percent"].y(.5)+12))
+      		.attr("text-anchor","start")
+
+
+      	g.selectAll(".fifty-percent")
       		.transition()
       		.duration(transitionDuration)
       		.style("opacity",opacity)
