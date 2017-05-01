@@ -1,0 +1,166 @@
+.intro {
+  margin: 5rem auto;
+}
+.intro__hed {
+  max-width: 55rem;
+  margin: 0 auto 4rem auto;
+  padding: 0 1rem;
+  text-align: center;
+  font-size: 32px;
+  line-height: 1.2;
+}
+.intro__byline {
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+.intro__dek {
+  max-width: 25rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+main {
+  padding: 0 0.75rem;
+}
+
+.bar.women {
+  fill: steelblue;
+}
+
+.bar.men {
+  fill: grey;
+}
+
+.chart__smult {
+  width: 90%;
+  max-width: 800px;
+  margin: auto;
+}
+
+.chart__smult svg {
+  margin: .25rem;
+}
+
+.smult__value{
+  font: 11px sans-serif;
+  fill: white;
+}
+.genre__label{
+  font: 14px sans-serif;
+}
+
+.chart__gender {
+  width: 90%;
+  max-width: 800px;
+  margin: auto;
+  position: relative;
+}
+
+.chart__gender .tooltip {
+  position: absolute;
+  background: red;
+}
+
+.chart__gender .fifty-percent {
+  fill: none;
+  stroke: #fff;
+  stroke-opacity: 0.5;
+  stroke-width: 1px;
+  stroke-dasharray: 4px 4px;
+}
+
+.chart__gender .vertical {
+  fill: #fff;
+  fill-opacity: 0.5;
+}
+
+.chart__gender text {
+  font-family: 'Atlas Grotesk Web', Arial, sans-serif;
+  font-size: 12px;
+}
+
+.chart__gender text.area__label {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+} 
+
+.chart__gender .axis path {
+  display:  none;
+}
+
+.chart__gender .axis text {
+    font-size: 10px;
+}
+.chart__genre {
+  width: 90%;
+  max-width: 800px;
+  margin: auto;
+}
+
+.chart__gender svg {
+}
+
+.toggle {
+  margin: 1rem auto;
+  text-align: center;
+}
+
+.toggle li {
+  display: inline-block;
+}
+
+.toggle__button {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid #000;
+}
+
+.toggle__button.is-active {
+  background-color: red;
+}
+
+
+.tooltip {
+  position: absolute;
+  text-align: left;
+  padding: 6px;
+  font: 13px sans-serif;
+  line-height: 15px;
+  background: white;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.story__text {
+  /* russ */
+  max-width: 35rem;
+  margin: 2rem auto;
+}
+
+.story__text p {
+  margin-bottom: 1.5rem;
+}
+
+@media only screen and (min-width: 40em) {
+  .intro__hed {
+    font-size: 48px;
+    line-height: 1.2;
+  }
+}
+@media only screen and (min-width: 50em) {
+  .intro__hed {
+    font-size: 64px;
+    line-height: 1.2;
+  }
+}
