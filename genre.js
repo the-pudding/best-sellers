@@ -9,6 +9,7 @@
 	var transitionDuration = 1000;
 
 	var state = 'percent'
+	var labels = {'count':'Count of books', 'percent':'Percent of books', 'genrePercent':'Percent of genre books'}
 
 	var chart = d3.select('.chart__genre')
 	var svg = chart.select('svg')
@@ -113,6 +114,10 @@
 	  		.attr("class", "vertical")
   			.attr("width", 1)
   			.attr("x", 0)
+
+  		svg.append("text")
+			.attr("class","label--y")
+			.attr("text-anchor","middle")
 	}
 
 	// SET UP GENRE
@@ -134,8 +139,10 @@
 			.attr("transform", "translate(0," + height + ")")
 			.call(d3.axisBottom(scales[state].x))
 
+		var yaxis = state === "count" ? d3.axisLeft(scales[state].y).ticks(10):d3.axisLeft(scales[state].y).ticks(10,"%")
+
 		svg.select(".axis--y")
-			.call(d3.axisLeft(scales[state].y).ticks(10))
+			.call(yaxis)
 	}
 
 	function drawLegend(width,height) {
@@ -159,6 +166,16 @@
 	    console.log("legend",legendOrdinal)
 		svg.select(".legendOrdinal")
 		    .call(legendOrdinal);
+	}
+
+	function drawLabels(height) {
+		console.log("labels!",state)
+		console.log("labels!",labels[state])
+		var label = svg.select('.label--y')
+			.text(labels[state])
+			.transition()
+			.duration(transitionDuration)
+			.attr("transform", "translate("+ (margin.left/4) +","+(height/2)+")rotate(-90)")
 	}
 
 	function updateChart() {
@@ -202,7 +219,8 @@
 		var area = d3.area()
 		    .x(function(d, i) { return scales[state].x(d.data.dateParsed); })
 		    .y0(function(d) { return scales[state].y(d[0]); })
-		    .y1(function(d) { return scales[state].y(d[1]); });
+		    .y1(function(d) { return scales[state].y(d[1]); })
+		    .curve(d3.curveMonotoneX);
 
 		var keys = genreData.columns.slice(1).map(function(key) {
 			return key + '_' + state;
@@ -234,6 +252,9 @@
 	      		var key = d.key.split('_')[0]
 	      		return scales.color(key);
 	      	})
+
+	    drawLabels(height)
+
 	    if(useLegend === true){
 		    drawLegend(width,height)
 		}
