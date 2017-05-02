@@ -4,6 +4,8 @@
 	var genreData = null;
 	var scales = {};
 	var margin = { top:10, bottom:25, left:50, right:120 }
+	var width = 0
+	var height = 0
 	var ratio = 1.5;
 	var stack = d3.stack();
 	var transitionDuration = 1000;
@@ -134,7 +136,7 @@
 		scales[state].y.range([height,0]);
 	}
 
-	function drawAxes(height){
+	function drawAxes(){
 		svg.select(".axis--x")
 			.attr("transform", "translate(0," + height + ")")
 			.call(d3.axisBottom(scales[state].x))
@@ -146,7 +148,6 @@
 	}
 
 	function drawLegend(width,height) {
-		console.log(width)
 		svg.select(".legend-container")
 			.attr("visibility","visible")
 		  .attr("width",margin.right)
@@ -163,14 +164,11 @@
 	        .scale(scales.color)
 	        .ascending(true);
 
-	    console.log("legend",legendOrdinal)
 		svg.select(".legendOrdinal")
 		    .call(legendOrdinal);
 	}
 
 	function drawLabels(height) {
-		console.log("labels!",state)
-		console.log("labels!",labels[state])
 		var label = svg.select('.label--y')
 			.text(labels[state])
 			.transition()
@@ -185,18 +183,15 @@
 		margin.right = 120
 		var useLegend = true
 		if(margin.right>=svg_width/6){
-			console.log("removing legend")
 			margin.right = 10
 			useLegend = false
 			svg.select(".legend-container")
 				.attr("visibility","hidden")
 		}
-		console.log("svg_width",svg_width)
-		console.log("margin.right",margin.right)
 
 
-		var width = svg_width - margin.left - margin.right;
-		var height = svg_height - margin.top - margin.bottom;
+		width = svg_width - margin.left - margin.right;
+		height = svg_height - margin.top - margin.bottom;
 		
 		svg
 			.attr('width', svg_width)
@@ -261,7 +256,6 @@
 	}
 
 	function handleMouseMove(d) {
-		console.log("mosuemove")
 		var key = d.key
 	    var mouse = d3.mouse(this)
 	    var mouseX = mouse[0]
@@ -296,7 +290,6 @@
 		chart.selectAll('.toggle__button').on('click', handleToggle);
 		chart.selectAll('.area')
 			.on('mousemove',handleMouseMove)
-			.on('mouseout',handleMouseOut)
 	}
 
 	function resize() {
@@ -310,7 +303,6 @@
 			setupScales()
 			resize() // draw chart
 			setupEvents()
-			resize()
 			window.addEventListener('resize', resize)
 		})
 	}

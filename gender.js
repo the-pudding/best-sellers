@@ -225,14 +225,13 @@
 		chart.select(".tooltip--value").text(displayValue);
        	
        	var isLeft = mouseX < width / 2
-       	var isBottom = mouseY > height / 2
+       	var isTop = mouseY > height/2
        	var xOff = scales[state].x(d.date)
        	var yOff = mouseY
        	chart.select('.tooltip')
        		.style("right", isLeft ? 'auto' : width - xOff + margin.right + 'px')
        		.style("left", isLeft ? xOff + margin.left + 'px' : "auto")
-       		.style("top", isBottom ? 'auto' : yOff - margin.top + 'px')
-       		.style("bottom", isBottom ? height - yOff + margin.bottom + 'px' : 'auto')
+       		.style("top", yOff+"px")
 
 
 	}

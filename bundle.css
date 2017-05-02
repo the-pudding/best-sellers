@@ -148,9 +148,24 @@ main {
   width: 90%;
   max-width: 800px;
   margin: auto;
+  position: relative;
 }
 
-.chart__genre .area {
+.chart__genre text {
+  font-family: 'Atlas Grotesk Web', Arial, sans-serif;
+  font-size: 12px;
+}
+
+.chart__genre .axis path {
+  display:  none;
+}
+
+.chart__genre .axis text {
+    font-size: 10px;
+}
+
+
+.chart__gender svg {
 }
 
 .legend-container text {
