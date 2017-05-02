@@ -157,6 +157,7 @@
 				return scales[state].y(.05)
 			}
 		}
+
 		var d = xToD(.9*width,genderData)
 
 		k = key+"_count"
@@ -164,7 +165,7 @@
 		console.log(k,d[k])
 
 		if(key == "male"){
-			return scales[state].y((d["female_"+state]+d[k]/2))
+			return scales[state].y((d["female_count"]+d[k]/2))
 		} else {
 			return scales[state].y((d[k]/2))
 		}
@@ -224,12 +225,16 @@
 		chart.select(".tooltip--value").text(displayValue);
        	
        	var isLeft = mouseX < width / 2
+       	var isBottom = mouseY > height / 2
        	var xOff = scales[state].x(d.date)
-       	var yOff = mouseY + margin.top
+       	var yOff = mouseY
        	chart.select('.tooltip')
        		.style("right", isLeft ? 'auto' : width - xOff + margin.right + 'px')
        		.style("left", isLeft ? xOff + margin.left + 'px' : "auto")
-       		.style("top",  yOff + "px");
+       		.style("top", isBottom ? 'auto' : yOff - margin.top + 'px')
+       		.style("bottom", isBottom ? height - yOff + margin.bottom + 'px' : 'auto')
+
+
 	}
 
 //Should the tooltip go away when you leave the chart?

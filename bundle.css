@@ -120,7 +120,7 @@ main {
   font-size: 12px;
 }
 
-.chart__gender .vertical {
+.vertical {
   fill: #fff;
   fill-opacity: 0.5;
 }

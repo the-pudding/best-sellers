@@ -87,7 +87,11 @@
 		scales.genrePercent = {x:genrePX, y:genrePY}
 
 
-		scales.color = d3.scaleOrdinal(d3.schemeCategory20).domain(keys)
+		scales.color = d3.scaleOrdinal().domain(keys).range([
+			'#cccccc','#DBDBDB','#c8c8c8','#b5b5b5',
+			'#a3a3a3','#909090','#7d7d7d','#6b6b6b',
+			'#585858','#454545','#666666'
+			])
 	}
 
 	function setupElements() {
@@ -104,6 +108,11 @@
 			.attr('class', 'axis axis--x');
 		g.append('g')
 			.attr('class', 'axis axis--y');
+
+		g.append("rect")
+	  		.attr("class", "vertical")
+  			.attr("width", 1)
+  			.attr("x", 0)
 	}
 
 	// SET UP GENRE
@@ -186,6 +195,10 @@
 
 		updateScales(width,height)
 
+		g.select(".vertical")
+			.attr("height", height)
+      		.attr("y", 0)
+
 		var area = d3.area()
 		    .x(function(d, i) { return scales[state].x(d.data.dateParsed); })
 		    .y0(function(d) { return scales[state].y(d[0]); })
@@ -226,15 +239,43 @@
 		}
 	}
 
+	function handleMouseMove(d) {
+		console.log("mosuemove")
+		var key = d.key
+	    var mouse = d3.mouse(this)
+	    var mouseX = mouse[0]
+	    var mouseY = mouse[1]
+	    var invertedX = scales[state].x.invert(mouseX)
+
+	    var bisectDate = d3.bisector(d => d.dateParsed).left;
+
+	    var index = bisectDate(genreData, invertedX, 1)
+
+		var d0 = genreData[index - 1];
+		var d1 = genreData[index];
+		
+		var d = invertedX - d0.dateParsed > d1.dateParsed - invertedX ? d1 : d0;
+		
+		chart.select(".vertical")
+			.attr("x",(scales[state].x(d.dateParsed)))
+	}
+
 	function handleToggle() {
 		if (this.value != state) {
 			state = this.value
+			chart.selectAll('.toggle__button')
+				.classed('is-active', false)
+
+			d3.select(this).classed('is-active', true)
 			updateChart()
 		}
 	}
 
 	function setupEvents() {
 		chart.selectAll('.toggle__button').on('click', handleToggle);
+		chart.selectAll('.area')
+			.on('mousemove',handleMouseMove)
+			.on('mouseout',handleMouseOut)
 	}
 
 	function resize() {
