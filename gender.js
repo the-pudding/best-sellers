@@ -228,14 +228,18 @@
 		chart.select(".tooltip--year").text(displayYear);
 		chart.select(".tooltip--value").text(displayValue);
        	
-       	var isLeft = mouseX < width / 2
-       	var isTop = mouseY > height/2
-       	var xOff = scales[state].x(d.date)
-       	var yOff = mouseY
+       	var bbox = chart.select('.tooltip').node().getBoundingClientRect()
+
+       	var isLeft = mouseX < width / 2;
+       	var isTop = mouseY < height / 2;
+       	var xOff = scales[state].x(d.date);
+       	var topOff = isTop ? 0 : -1; 
+       	var yOff = mouseY + topOff * bbox.height;
+		
        	chart.select('.tooltip')
        		.style("right", isLeft ? 'auto' : width - xOff + margin.right + 'px')
        		.style("left", isLeft ? xOff + margin.left + 'px' : "auto")
-       		.style("top", yOff+"px")
+       		.style("top", yOff + margin.top + topOff + "px")
 
 
 	}

@@ -159,7 +159,7 @@ main {
 
 .chart__gender .axis--y line {
     stroke-dasharray: 4px 4px;
-    stroke-opacity: 0.1;
+    stroke-opacity: 0.2;
 }
 
 .chart__gender .axis--y .tick:nth-child(2) {
