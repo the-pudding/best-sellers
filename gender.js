@@ -1,6 +1,7 @@
 (function() {
 
 	//VARS
+	var mobile = false;	
 	var genderData = null;
 	var scales = {};
 	var stack = d3.stack();
@@ -120,19 +121,24 @@
 
 
 	function drawAxes(g) {
+		var tickCount = mobile ? 5 : 10
+
+		var axisX = d3.axisBottom(scales[state].x)
+			.ticks(tickCount)
+
 		g.select(".axis--x")
 			.attr("transform", "translate(0," + height + ")")
-			.call(d3.axisBottom(scales[state].x))
+			.call(axisX)
 
 		var formatter = state === "percent" ? '%' : 'r'
-		var yaxis = d3.axisLeft(scales[state].y)
-			.ticks(10, formatter)
+		var axisY = d3.axisLeft(scales[state].y)
+			.ticks(tickCount, formatter)
 			.tickSizeInner(-width)
 
 		g.select(".axis--y")
 			.transition()
 			.duration(transitionDuration)
-			.call(yaxis)
+			.call(axisY)
 	}
 
 	function xToD(x,data){
@@ -359,6 +365,9 @@
 	}
 
 	function resize() {
+		var breakpoint = 600;
+		var w = d3.select('body').node().offsetWidth;
+		mobile = w < breakpoint;
 		updateChart()
 	}
 
