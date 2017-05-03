@@ -19,6 +19,10 @@
 	var chart = d3.select('.chart__gender');
 	var svg = chart.select('svg');
 
+	function formatPercent(num) {
+		return d3.format(".0%")(num);
+	}
+
 	// CLEANING FNS
 	function cleaRow(row) {
 		var female = +row.Female;
@@ -109,6 +113,11 @@
 			.attr("class","fifty-percent fifty-percent-label")
 			.text("Gender Equality (50%)")
 
+		g.append('rect')
+			.attr('x', 0)
+			.attr('y', 0)
+			.attr('class', 'interaction')
+
 	}
 	
 	//UPDATE
@@ -141,15 +150,15 @@
 			.call(axisY)
 	}
 
-	function xToD(x,data){
+	function xToData(x) {
 		var invertedX = scales[state].x.invert(x)
 
 	    var bisectDate = d3.bisector(d => d.date).left;
 
-	    var index = bisectDate(data, invertedX, 1)
+	    var index = bisectDate(genderData, invertedX, 1)
 
-		var d0 = data[index - 1];
-		var d1 = data[index];
+		var d0 = genderData[index - 1];
+		var d1 = genderData[index];
 		
 		var d = invertedX - d0.date > d1.date - invertedX ? d1 : d0;
 
@@ -168,7 +177,7 @@
 			}
 		}
 
-		var d = xToD(.9*width,genderData)
+		var d = xToData(0.9 * width)
 
 		k = key+"_count"
 
@@ -206,34 +215,26 @@
 			.style("text-anchor", "middle")
 	}
 
-	function handleMouseMove(d) {
-		var key = d.key
+	function handleMouseMove() {
 	    var mouse = d3.mouse(this)
 	    var mouseX = mouse[0]
 	    var mouseY = mouse[1]
-	    var invertedX = scales[state].x.invert(mouseX)
 
-	    var bisectDate = d3.bisector(d => d.date).left;
-
-	    var index = bisectDate(genderData, invertedX, 1)
-
-		var d0 = genderData[index - 1];
-		var d1 = genderData[index];
-		
-		var d = invertedX - d0.date > d1.date - invertedX ? d1 : d0;
+	    var d = xToData(mouseX)
 		
 		chart.select(".vertical")
 			.attr("x",(scales[state].x(d.date)));
 
-		var val = d[key];
-		var displayValue = state === 'percent' ? d3.format(".0%")(val) : val;
+		var valM = d['male_' + state]
+		var valF = d['female_' + state]
+		var displayM = state === 'percent' ? formatPercent(valM) : valM;
+		var displayF = state === 'percent' ? formatPercent(valF) : valF;
 		var displayYear = +d3.timeFormat("%Y")(d.date);
-		var displayGender = key.split('_')[0];
 		
-		chart.select(".tooltip--gender").text(displayGender);
 		chart.select(".tooltip--year").text(displayYear);
-		chart.select(".tooltip--value").text(displayValue);
-       	
+		chart.select(".tooltip--male").text(displayM);
+		chart.select(".tooltip--female").text(displayF);
+		
        	var bbox = chart.select('.tooltip').node().getBoundingClientRect()
 
        	var isLeft = mouseX < width / 2;
@@ -320,8 +321,6 @@
 	      		return scales.color(key);
 	      	})
 
-	    console.log("1950",(d3.timeParse("%Y")("1950")))
-
 	    //drawFiftyPercent()
 
 	    var opacity = state === 'percent' ? 0.5 : 0;
@@ -341,6 +340,10 @@
       		.transition()
       		.duration(transitionDuration)
       		.style("opacity",opacity)
+
+      	g.select('.interaction')
+      		.attr('width', width)
+      		.attr('height', height)
 	}
 
 
@@ -359,9 +362,9 @@
 	function setupEvents() {
 		chart.selectAll('.toggle__button').on('click', handleToggle)
 		
-		chart.selectAll('.area')
+		chart.selectAll('.interaction')
 			.on('mousemove',handleMouseMove)
-			.on('mouseout',handleMouseOut)
+			// .on('mouseout',handleMouseOut)
 	}
 
 	function resize() {

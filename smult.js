@@ -43,7 +43,7 @@
 	function setupChart() {
 		var genres = d3.nest().key(function(d){ return d.genre}).entries(smultData);
 		setupScales()
-		console.log("genres",genres)	
+		// console.log("genres",genres)	
 		makeChartElements(genres)
 		
 	}
@@ -75,7 +75,7 @@
 			.style("text-anchor", "end")
 			.style("font-weight","bold")
 			.text(function(d) { 
-				console.log(d)
+				// console.log(d)
 				return d.key; 
 			});
 
@@ -199,7 +199,7 @@
 
 	function init() {
 		loadData(function() {
-			console.log("smult",smultData)
+			// console.log("smult",smultData)
 			setup()
 			resize()
 			window.addEventListener('resize', resize)
