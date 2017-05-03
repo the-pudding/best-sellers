@@ -72,11 +72,11 @@
 	function setupElements() {
 		var g = svg.select('.container');
 
-		g.append('g').attr('class', 'area-container');
-
 		g.append('g').attr('class', 'axis axis--x');
 
 		g.append('g').attr('class', 'axis axis--y');
+
+		g.append('g').attr('class', 'area-container');
 
 		g.append("rect")
 	  		.attr("class", "vertical")
@@ -119,12 +119,16 @@
 	}
 
 
-	function drawAxes(g, height){
+	function drawAxes(g) {
 		g.select(".axis--x")
 			.attr("transform", "translate(0," + height + ")")
 			.call(d3.axisBottom(scales[state].x))
 
-		var yaxis = state === "percent" ? d3.axisLeft(scales[state].y).ticks(10,"%"):d3.axisLeft(scales[state].y).ticks(10)
+		var formatter = state === "percent" ? '%' : 'r'
+		var yaxis = d3.axisLeft(scales[state].y)
+			.ticks(10, formatter)
+			.tickSizeInner(-width)
+
 		g.select(".axis--y")
 			.transition()
 			.duration(transitionDuration)
@@ -162,7 +166,7 @@
 
 		k = key+"_count"
 
-		console.log(k,d[k])
+		// console.log(k,d[k])
 
 		if(key == "male"){
 			return scales[state].y((d["female_count"]+d[k]/2))
@@ -171,7 +175,7 @@
 		}
 	}
 
-	function drawLabels(g, width, height) {
+	function drawLabels(g) {
 		svg.select('.label--y')
 			.text(labels[state])
 		.transition()
@@ -290,8 +294,8 @@
 			.append('path')
 			.attr('class', 'area')
 
-		drawAxes(g, height)
-		drawLabels(g, width, height)
+		drawAxes(g)
+		drawLabels(g)
 
 		vertical = g.select(".vertical")
 			.attr("height", height)

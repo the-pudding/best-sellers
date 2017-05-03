@@ -120,6 +120,7 @@ main {
 .chart__gender .tooltip {
   position: absolute;
   background: red;
+  pointer-events: none;
 }
 
 .chart__gender .fifty-percent-line {
@@ -153,9 +154,17 @@ main {
 } 
 
 .chart__gender .axis path {
-  display:  none;
+  display: none;
 }
 
+.chart__gender .axis--y line {
+    stroke-dasharray: 4px 4px;
+    stroke-opacity: 0.1;
+}
+
+.chart__gender .axis--y .tick:nth-child(2) {
+  display: none;
+}
 .chart__gender .axis text {
     font-size: 10px;
 }
