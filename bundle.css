@@ -63,12 +63,27 @@ a:hover {
 
 
 /* STORY */
-
-/* russ */
 main {
   padding: 0 0.75rem;
 }
 
+.story__text {
+  max-width: 35rem;
+  margin: 2rem auto;
+}
+
+.story__text p {
+  margin-bottom: 1.5rem;
+}
+
+
+.chart {
+  max-width: 50rem;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* SMULT */
 .bar.women {
   fill: steelblue;
 }
@@ -78,9 +93,7 @@ main {
 }
 
 .chart__smult {
-  width: 90%;
-  max-width: 800px;
-  margin: auto;
+  
 }
 
 .chart__smult svg {
@@ -91,15 +104,17 @@ main {
   font: 11px sans-serif;
   fill: white;
 }
+
 .genre__label{
   font: 14px sans-serif;
 }
 
+
+
+
+/* GENDER */
 .chart__gender {
-  width: 90%;
-  max-width: 800px;
-  margin: auto;
-  position: relative;
+  
 }
 
 .chart__gender .tooltip {
@@ -144,11 +159,15 @@ main {
 .chart__gender .axis text {
     font-size: 10px;
 }
+
+
+
+
+
+
+/* GENRE */
 .chart__genre {
-  width: 90%;
-  max-width: 800px;
-  margin: auto;
-  position: relative;
+  
 }
 
 .chart__genre text {
@@ -232,12 +251,3 @@ div.tooltip {
   pointer-events: none;
 }
 
-.story__text {
-  /* russ */
-  max-width: 35rem;
-  margin: 2rem auto;
-}
-
-.story__text p {
-  margin-bottom: 1.5rem;
-}

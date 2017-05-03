@@ -6,7 +6,7 @@
 	var margin = { top:10, bottom:25, left:50, right:120 }
 	var width = 0
 	var height = 0
-	var ratio = 1.5;
+	var ratio = 1.65;
 	var stack = d3.stack();
 	var transitionDuration = 1000;
 
