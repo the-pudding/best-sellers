@@ -169,6 +169,10 @@ main {
     font-size: 10px;
 }
 
+.chart__gender .interaction {
+  fill-opacity: 0;
+}
+
 
 
 

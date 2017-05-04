@@ -298,7 +298,7 @@
 
 	function init() {
 		loadData(function() {
-			console.log(genreData)
+			// console.log(genreData)
 			setupElements()
 			setupScales()
 			resize() // draw chart
