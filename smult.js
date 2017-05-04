@@ -25,7 +25,7 @@
 
 	// LOAD THE DATA
 	function loadData(cb) {
-		d3.tsv('assets/smult_data.tsv', cleanRow, function(err, data) {
+		d3.tsv('assets/smult_data_2.tsv', cleanRow, function(err, data) {
 			smultData = data
 			cb()
 		});
