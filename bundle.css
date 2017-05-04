@@ -268,3 +268,21 @@ div.tooltip {
   pointer-events: none;
 }
 
+.chart__genre .mobile-legend {
+  display: block;
+}
+
+.chart__genre .mobile-legend li {
+  float: left;
+  padding: 0.25rem;
+  line-height: 1;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 11px;
+}
+
+@media only screen and (min-width: 700px) {
+  .chart__genre .mobile-legend {
+    display: none;
+  }
+}

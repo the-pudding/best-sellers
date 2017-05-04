@@ -261,20 +261,25 @@
 
 			<p>Since most of this change occurred in the 1990s, I was curious to see whether the authors in that decade were special. Here, binned by decade, are the top-performing authors on the NYTimes Best Sellers list, as measured by how many books of theirs made the list in that time period.</p>
 
+			<h3>Top authors by decade</h3>
 			<table>
-			<caption>1980s</caption>
-			<tr><th>Rank</th><th>Books on List</th><th>Name</th><th>Gender</th><th>Primary Genre</th></tr>
-			<tr><td>1</td><td>14</td><td>Stephen King</td><td>Male</td><td>horror</td></tr>
-			<tr><td>2</td><td>11</td><td>Dick Francis</td><td>Male</td><td>mystery</td></tr>
-			<tr><td>3-4</td><td>10</td><td>L. Ron Hubbard</td><td>Male</td><td>fsf</td></tr>
-			<tr><td>3-4</td><td>10</td><td>Danielle Steel</td><td>Female</td><td>romance</td></tr>
-			<tr><td>5</td><td>9</td><td>Lawrence Sanders</td><td>Male</td><td>mystery</td></tr>
-			<tr><td>6</td><td>8</td><td>James A. Michener</td><td>Male</td><td>historical</td></tr>
-			<tr><td>7-11</td><td>7</td><td>Robin Cook</td><td>Male</td><td>horror</td></tr>
-			<tr><td>7-11</td><td>7</td><td>Jack Higgins</td><td>Male</td><td>adventure</td></tr>
-			<tr><td>7-11</td><td>7</td><td>Len Deighton</td><td>Male</td><td>spy_and_politics</td></tr>
-			<tr><td>7-11</td><td>7</td><td>Andrew M. Greeley</td><td>Male</td><td>mystery</td></tr>
-			<tr><td>7-11</td><td>7</td><td>John Gardner</td><td>Male</td><td>spy_and_politics</td></tr>
+				<caption>Top authors of the 1980s</caption>
+				<thead>
+					<tr><th>Rank</th><th>Books on List</th><th>Name</th><th>Gender</th><th>Primary Genre</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>1</td><td>14</td><td>Stephen King</td><td>Male</td><td>horror</td></tr>
+					<tr><td>2</td><td>11</td><td>Dick Francis</td><td>Male</td><td>mystery</td></tr>
+					<tr><td>3</td><td>10</td><td>L. Ron Hubbard</td><td>Male</td><td>fsf</td></tr>
+					<tr><td></td><td>10</td><td>Danielle Steel</td><td>Female</td><td>romance</td></tr>
+					<tr><td>5</td><td>9</td><td>Lawrence Sanders</td><td>Male</td><td>mystery</td></tr>
+					<tr><td>6</td><td>8</td><td>James A. Michener</td><td>Male</td><td>historical</td></tr>
+					<tr><td>7</td><td>7</td><td>Robin Cook</td><td>Male</td><td>horror</td></tr>
+					<tr><td></td><td>7</td><td>Jack Higgins</td><td>Male</td><td>adventure</td></tr>
+					<tr><td></td><td>7</td><td>Len Deighton</td><td>Male</td><td>spy_and_politics</td></tr>
+					<tr><td></td><td>7</td><td>Andrew M. Greeley</td><td>Male</td><td>mystery</td></tr>
+					<tr><td></td><td>7</td><td>John Gardner</td><td>Male</td><td>spy_and_politics</td></tr>
+				</tbody>
 			</table>
 
 			<table>
@@ -309,8 +314,9 @@
 		</div>
 		<div class='chart chart__genre'>
 			<h2 class="name">Best-Selling Novels by Genre</h2>
+			<ul class='mobile-legend'></ul>
 			<svg><g class='container'></g></svg>
-			<ul class='toggle genre__toggle'>
+			<!-- <ul class='toggle genre__toggle'>
 				<li>
 					<button class='toggle__button' value='count'>Count</button>
 				</li>
@@ -320,8 +326,7 @@
 				<li>
 					<button class='toggle__button' value='genrePercent'>Genres only</button>
 				</li>
-			</ul>
-			</ul>
+			</ul> -->
 		</div>
 		<div class='story__text'>
 			<p>I also took a look at each of these genres by decade, and tracked the gender ratio. For each decade that at least 10 books within a genre made it onto the best sellers list, I plotted a bar on its chart below.</p>

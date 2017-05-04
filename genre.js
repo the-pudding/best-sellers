@@ -135,6 +135,19 @@
   		svg.append("text")
 			.attr("class","label--y")
 			.attr("text-anchor","middle")
+
+		// russ
+		chart.select('.mobile-legend').selectAll('li')
+			.data(genderColumns)
+		.enter().append('li')
+			.attr('class', 'tk-atlas')
+			.style('background-color', function(d) {
+				return scales.color(d);
+			})
+			.style('color', function(d) {
+				return d3.color(scales.color(d)).darker(0.9)
+			})
+			.text(function(d) { return d; })
 	}
 
 	// SET UP GENRE
@@ -310,8 +323,8 @@
 	function init() {
 		loadData(function() {
 			// console.log(genreData)
-			setupElements()
 			setupScales()
+			setupElements()
 			resize() // draw chart
 			setupEvents()
 			window.addEventListener('resize', resize)
