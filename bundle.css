@@ -200,9 +200,13 @@ main {
 .chart__gender svg {
 }
 
+.legend-container.is-hidden {
+  display: none;
+}
+
 .legend-container text {
   padding: 1rem;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .toggle {

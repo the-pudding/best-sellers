@@ -1,9 +1,13 @@
 (function() {
 
 	//VARS
+	var breakpoint = 700;
+	var mobile = false;
+	var addToOther = ['Historical', 'Domestic'];
+	var genderColumns = null;
 	var genreData = null;
 	var scales = {};
-	var margin = { top:10, bottom:25, left:50, right:120 }
+	var margin = { top:10, bottom:25, left:50, right: 130 }
 	var width = 0
 	var height = 0
 	var ratio = 1.65;
@@ -18,15 +22,15 @@
 	// CLEANING FNS
 
 	function cleanRow(row, i, cols) {
-		var target = {}		
-		var columns = cols.slice(1)
+		var target = {};
+		var columns = cols.slice(1);
 
 		var values = columns.map(function(columName) {
 			return +row[columName];
 		})
 
 		var genre_values = columns.map(function(columName) {
-			if(columName!="Literary/None"){
+			if (columName!='Literary/None') {
 				return +row[columName];
 			}
 		})
@@ -38,10 +42,21 @@
 		columns.forEach(function(columName, i) {
 			target[columName + '_count'] = values[i];
 			target[columName + '_percent'] = values[i] / target.total;
-			if(columName!="Literary/None"){
+			if(columName != 'Literary/None'){
 				target[columName + '_genrePercent'] = values[i] / target.genre_total;
 			}
 		});
+
+		addToOther.forEach(function(col) {
+			target['Other_count'] += target[col + '_count']
+		})
+
+		target['Other_percent'] = target['Other_count'] / target.total;
+
+		genderColumns = columns.filter(function(col) {
+			// is this colum NOT in addToOthers
+			return addToOther.indexOf(col) === -1
+		})
 
 		// update date
 		target.dateParsed = d3.timeParse('%Y')(row.date)
@@ -63,7 +78,7 @@
 	// GENRE HELPERS
 
 	function setupScales() {
-		var keys = genreData.columns.slice(1);
+		var keys = genderColumns;
 
 		// if (cp=='count') {
 		var maxCount = d3.max(genreData,function(d) { return d.total; })
@@ -180,14 +195,11 @@
 		var svg_width = chart.node().offsetWidth
 		var svg_height =  Math.floor(svg_width / ratio)
 
-		margin.right = 120
-		var useLegend = true
-		if(margin.right>=svg_width/6){
-			margin.right = 10
-			useLegend = false
-			svg.select(".legend-container")
-				.attr("visibility","hidden")
-		}
+
+		margin.right = mobile ? 20 : 130;
+			
+		svg.select(".legend-container")
+			.classed('is-hidden', mobile);
 
 
 		width = svg_width - margin.left - margin.right;
@@ -217,7 +229,7 @@
 		    .y1(function(d) { return scales[state].y(d[1]); })
 		    .curve(d3.curveMonotoneX);
 
-		var keys = genreData.columns.slice(1).map(function(key) {
+		var keys = genderColumns.map(function(key) {
 			return key + '_' + state;
 		});
 
@@ -250,9 +262,7 @@
 
 	    drawLabels(height)
 
-	    if(useLegend === true){
-		    drawLegend(width,height)
-		}
+	    drawLegend(width, height)
 	}
 
 	function handleMouseMove(d) {
@@ -293,6 +303,7 @@
 	}
 
 	function resize() {
+		mobile = d3.select('body').node().offsetWidth < breakpoint
 		updateChart()
 	}
 
