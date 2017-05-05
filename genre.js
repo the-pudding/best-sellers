@@ -296,6 +296,30 @@
 		
 		chart.select(".vertical")
 			.attr("x",(scales[state].x(d.dateParsed)))
+
+		var displayYear = +d3.timeFormat("%Y")(d.dateParsed);
+		
+		chart.select(".tooltip--year").text(displayYear);
+
+
+		genreData.map(function(d){
+			console.log(d)
+			chart.select('.tooltip').append("span")
+
+		})
+		
+       	var bbox = chart.select('.tooltip').node().getBoundingClientRect()
+
+       	var isLeft = mouseX < width / 2;
+       	var isTop = mouseY < height / 2;
+       	var xOff = scales[state].x(d.dateParsed);
+       	var topOff = isTop ? 0 : -1; 
+       	var yOff = mouseY + topOff * bbox.height;
+		
+       	chart.select('.tooltip')
+       		.style("right", isLeft ? 'auto' : width - xOff + margin.right + 'px')
+       		.style("left", isLeft ? xOff + margin.left + 'px' : "auto")
+       		.style("top", yOff + margin.top + topOff + "px")
 	}
 
 	function handleToggle() {
