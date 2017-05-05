@@ -175,15 +175,22 @@
 		scales[state].y.range([height,0]);
 	}
 
-	function drawAxes(){
+	function drawAxes() {
+		var tickCount = mobile ? 5 : 10
+
+		var axisX = d3.axisBottom(scales[state].x)
+			.ticks(tickCount)
+
 		svg.select(".axis--x")
 			.attr("transform", "translate(0," + height + ")")
-			.call(d3.axisBottom(scales[state].x))
+			.call(axisX)
 
-		var yaxis = state === "count" ? d3.axisLeft(scales[state].y).ticks(10):d3.axisLeft(scales[state].y).ticks(10,"%")
+		var formatter = state === "percent" ? '%' : 'r'
+		var axisY = d3.axisLeft(scales[state].y)
+			.ticks(tickCount, formatter)
 
 		svg.select(".axis--y")
-			.call(yaxis)
+			.call(axisY)
 	}
 
 	function drawLegend(width,height) {
