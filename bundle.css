@@ -10,7 +10,7 @@ p {
 }
 a {
   text-decoration: none;
-  border-bottom: 2px solid #f06;
+  border-bottom: 2px solid #BB605D;
   color: #2a2a2a;
 }
 a:visited,
@@ -37,34 +37,14 @@ a:hover {
   max-width: 25rem;
   margin: 0 auto;
 }
-@media only screen and (min-width: 25em) {
-  .hack {
-    display: none;
-  }
-}
-@media only screen and (min-width: 40em) {
-  .hack {
-    display: none;
-  }
-}
-@media only screen and (min-width: 50em) {
-  .hack {
-    display: none;
-  }
-  .intro__hed {
-    font-size: 4rem;
-  }
-}
-@media only screen and (min-width: 60em) {
-  .hack {
-    display: none;
-  }
-}
-
-
 /* STORY */
 main {
   padding: 0 0.75rem;
+}
+
+.subhed {
+  margin-top: 5rem;
+  font-weight: bold;
 }
 
 .story__text {
@@ -153,6 +133,7 @@ main {
   color: #333;
   padding: 0.25rem 0.5rem;
   width: 7rem;
+  visibility: hidden;
 }
 
 .chart__gender .tooltip p {
@@ -223,13 +204,13 @@ main {
   display: none;
 }
 
+.chart .axis--x line {
+  stroke-opacity: 0.2;
+}
+
 .chart__gender .axis--y line {
     stroke-dasharray: 4px 4px;
     stroke-opacity: 0.2;
-}
-
-.chart__gender .axis--x line {
-  stroke-opacity: 0.2;
 }
 
 .chart__gender .axis--y .tick:nth-child(2) {
@@ -307,9 +288,10 @@ main {
   float: left;
   padding: 0.25rem;
   line-height: 1;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-right: 0.2rem;
+  margin-bottom: 0.2rem;
   font-size: 11px;
+  border-radius: 3px;
 }
 
 .rg-container {
@@ -469,3 +451,29 @@ table.rg-table .highlight td {
     display: none;
   }
 }
+
+
+@media only screen and (min-width: 25em) {
+  .hack {
+    display: none;
+  }
+}
+@media only screen and (min-width: 40em) {
+  .hack {
+    display: none;
+  }
+}
+@media only screen and (min-width: 50em) {
+  .hack {
+    display: none;
+  }
+  .intro__hed {
+    font-size: 4rem;
+  }
+}
+@media only screen and (min-width: 60em) {
+  .hack {
+    display: none;
+  }
+}
+

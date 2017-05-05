@@ -14,7 +14,7 @@
 	var margin = { top:10, bottom:25, left:50, right: 130 }
 	var width = 0
 	var height = 0
-	var ratio = 1.65;
+	var ratio = 1.75;
 	var stack = d3.stack();
 	var transitionDuration = 1000;
 
@@ -152,8 +152,11 @@
 			.style('background-color', function(d) {
 				return scales.color(d);
 			})
-			.style('color', function(d) {
-				return d3.color(scales.color(d)).darker(0.9)
+			.style('color', function(d, i) {
+				var dark = i < colors.length / 2;
+				var col = d3.color(scales.color(d));
+				return col.brighter(10)
+				// return col.darker(5)
 			})
 			.text(function(d) { return d; })
 	}

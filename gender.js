@@ -13,7 +13,7 @@
 	var margin = { top:10, bottom:25, left:50, right:10 };
 	var width = 0;
 	var height = 0;
-	var ratio = 1.65;
+	var ratio = 1.75;
 	var transitionDuration = 1000;
 	var mouseTransitionDuration = 50
 	var tooltipTransitionDuration = 500
@@ -255,6 +255,7 @@
        	var yOff = mouseY + (topOff * bbox.height / 2);
 		
        	chart.select('.tooltip')
+       		.style('visibility', 'visible')
        		.style("right", isLeft ? 'auto' : width - xOff + margin.right + 'px')
        		.style("left", isLeft ? xOff + margin.left + 'px' : "auto")
        		.style("top", yOff + margin.top + topOff + "px")
@@ -265,15 +266,14 @@
 //Should the tooltip go away when you leave the chart?
 //I think it should.
 	function handleMouseOut() {
+		console.log('out')
 		// chart.select(".vertical")
 		// 	.transition()
 		// 	.duration(transitionDuration)
 		// 	.style("opacity",0)
 
-		// chart.select(".tooltip")
-		// 	.transition()
-		// 	.duration(tooltipTransitionDuration)
-		// 	.style("opacity",0)
+		chart.select('.tooltip')
+			.style('visibility', 'hidden');
 	}
 
 	function updateChart() {
@@ -375,7 +375,7 @@
 		
 		chart.selectAll('.interaction')
 			.on('mousemove',handleMouseMove)
-			// .on('mouseout',handleMouseOut)
+			.on('mouseout', handleMouseOut)
 	}
 
 	function resize() {
