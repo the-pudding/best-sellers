@@ -444,6 +444,14 @@ table.rg-table .highlight td {
   background-color: inherit;
   font-weight: normal;
 }
+
+.notice li {
+  list-style-type: circle;
+  margin-left: 1rem;
+}
+
+p.no-margin {
+  margin-bottom: 0;
 }
 
 @media only screen and (min-width: 700px) {
