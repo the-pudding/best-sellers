@@ -76,11 +76,38 @@ main {
   margin-bottom: 1.5rem;
 }
 
+.btn {
+  border-radius: 3px;
+  padding: 0.5rem;
+  line-height: 1;
+  width: 5rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: #ddd;
+  border: 2px solid #aaa;
+  opacity: 0.75;
+}
+
+.btn.is-active {
+  background-color: #888;
+}
 
 .chart {
   max-width: 50rem;
   margin: 0 auto;
   position: relative;
+}
+
+.chart text {
+  fill: #555;
+  font-family: 'Atlas Grotesk Web', Arial, sans-serif;
+}
+
+.chart__hed {
+  font-weight: bold;
+  text-align: center; 
 }
 
 /* SMULT */
@@ -119,30 +146,69 @@ main {
 
 .tooltip {
   position: absolute;
-  background: red;
   pointer-events: none;
+  background-color: rgba(255,255,255,0.9);
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  color: #333;
+  padding: 0.25rem 0.5rem;
+  width: 7rem;
 }
+
+.chart__gender .tooltip p {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  margin: 0;
+  margin-bottom: 0.25rem;
+  line-height: 1.25;
+}
+
+.chart__gender p.tooltip--year {
+  border-bottom: 1px solid #333;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  font-weight: bold;
+}
+
+.chart__gender .tooltip span {
+  font-weight: bold;
+}
+
+.chart__gender .tooltip--male span {
+  color: #BB605D;
+}
+
+.chart__gender .tooltip--female span {
+  color: #0C4840;
+}
+
 
 .chart__gender .fifty-percent-line {
   fill: none;
   stroke: #fff;
-  stroke-opacity: 0.5;
+  stroke-opacity: 0.6;
   stroke-width: 1px;
   stroke-dasharray: 4px 4px;
 }
 
 .chart__gender .fifty-percent-label {
   fill: #fff;
-  font-size: 12px;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.05em;
 }
 
 .vertical {
-  fill: #fff;
+  fill: #ddd;
   fill-opacity: 0.5;
 }
 
 .chart__gender text {
-  font-family: 'Atlas Grotesk Web', Arial, sans-serif;
   font-size: 12px;
 }
 
@@ -160,6 +226,10 @@ main {
 .chart__gender .axis--y line {
     stroke-dasharray: 4px 4px;
     stroke-opacity: 0.2;
+}
+
+.chart__gender .axis--x line {
+  stroke-opacity: 0.2;
 }
 
 .chart__gender .axis--y .tick:nth-child(2) {
@@ -184,7 +254,6 @@ main {
 }
 
 .chart__genre text {
-  font-family: 'Atlas Grotesk Web', Arial, sans-serif;
   font-size: 12px;
 }
 
@@ -196,8 +265,8 @@ main {
     font-size: 10px;
 }
 
-
-.chart__gender svg {
+.chart__genre .area {
+  stroke: none;
 }
 
 .legend-container.is-hidden {
@@ -218,45 +287,7 @@ main {
   display: inline-block;
 }
 
-.toggle__button {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.8rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border: 1px solid #000;
-}
-
-.toggle__button.is-active {
-  background-color: red;
-}
-
-
-.name{
-  margin: 0px;
-  text-decoration: none;
-  line-height: 30px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-size: 20px;
-  font-weight: 600;
-  margin-top: 4px;
-  margin-top: 4px;
-  font-family: "Whitney SSm A", "Whitney SSm B";
-  color: black;
-  width: 100%;
-  text-align: center;
-  margin-top: 10px;
-  display: block;
-  font-weight: 600;
-  text-transform: uppercase;
-/*  font-size: 0.8rem;*/
-  margin-top: 0.75em;
-  letter-spacing: 0.05em;
-}
-
-div.tooltip {
+.tooltip {
   position: absolute;
   text-align: left;
   padding: 6px;

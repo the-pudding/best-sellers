@@ -1,6 +1,11 @@
 (function() {
 
 	//VARS
+	var colors = ['#0C4840','#114F53','#265463','#415770','#5F5878','#7C5879','#975875','#AC5A6A','#BB605D']
+
+	var colorF = colors[0]
+	var colorM = colors[8]
+	var colors = [colorF, colorM]
 	var mobile = false;	
 	var genderData = null;
 	var scales = {};
@@ -70,7 +75,7 @@
 
 		scales.color = d3.scaleOrdinal()
 			.domain(['male_count', 'female_count'])
-			.range(['#ccc', '#666']);
+			.range(colors);
 		
 	}
 
@@ -99,11 +104,13 @@
 		g.append("text")
 			.attr("class","area__label area__label--men")
 			.style("text-anchor", "end")
+			.style('fill', d3.color(colorM).darker(2))
 			.text("Men");
 
 		g.append("text")
 			.attr("class","area__label area__label--women")
 			.style("text-anchor", "end")
+			.style('fill', d3.color(colorF).brighter(2))
 			.text("Women");
 
 		g.append("line")
@@ -111,6 +118,8 @@
 
 		g.append("text")
 			.attr("class","fifty-percent fifty-percent-label")
+			.attr('alignment-baseline', 'baseline')
+			.attr('text-anchor', 'middle')
 			.text("Gender Equality (50%)")
 
 		g.append('rect')
@@ -169,25 +178,27 @@
 
 	function setLabelY(key,width,height){
 
-		if(state == "percent"){
-			if(key == "male"){
-				return scales[state].y(.55)
-			}else{
-				return scales[state].y(.05)
-			}
-		}
+		if (key === 'male') return height * 0.4
+		return height * 0.9
+		// if(state == "percent"){
+		// 	if(key == "male"){
+		// 		return scales[state].y(.55)
+		// 	}else{
+		// 		return scales[state].y(.05)
+		// 	}
+		// }
 
-		var d = xToData(0.9 * width)
+		// var d = xToData(0.9 * width)
 
-		k = key+"_count"
+		// k = key+"_count"
 
-		// console.log(k,d[k])
+		// // console.log(k,d[k])
 
-		if(key == "male"){
-			return scales[state].y((d["female_count"]+d[k]/2))
-		} else {
-			return scales[state].y((d[k]/2))
-		}
+		// if(key == "male"){
+		// 	return scales[state].y((d["female_count"]+d[k]/2))
+		// } else {
+		// 	return scales[state].y((d[k]/2))
+		// }
 	}
 
 	function drawLabels(g) {
@@ -197,22 +208,22 @@
 			.duration(transitionDuration)
 			.attr("transform", "translate("+ (margin.left/4) +","+(height/2)+")rotate(-90)")
 
-		var yMen = setLabelY("male",width,height)
-		var yWomen = setLabelY("female",width,height)
+		var yMen = setLabelY("male", width,height)
+		var yWomen = setLabelY("female", width,height)
 
 		g.select(".area__label--women")
 			.transition()
 			.duration(transitionDuration)
-			.attr("x", .9 * width)
+			.attr("x", .925 * width)
 			.attr("y", yWomen)
-			.style("text-anchor", "middle")
+			.style("text-anchor", "end")
 
 		g.select(".area__label--men")
 			.transition()
 			.duration(transitionDuration)
-			.attr("x", .9 * width)
+			.attr("x", .925 * width)
 			.attr("y", yMen)
-			.style("text-anchor", "middle")
+			.style("text-anchor", "end")
 	}
 
 	function handleMouseMove() {
@@ -232,16 +243,16 @@
 		var displayYear = +d3.timeFormat("%Y")(d.date);
 		
 		chart.select(".tooltip--year").text(displayYear);
-		chart.select(".tooltip--male").text(displayM);
-		chart.select(".tooltip--female").text(displayF);
+		chart.select(".tooltip--male span").text(displayM);
+		chart.select(".tooltip--female span").text(displayF);
 		
        	var bbox = chart.select('.tooltip').node().getBoundingClientRect()
 
        	var isLeft = mouseX < width / 2;
        	var isTop = mouseY < height / 2;
        	var xOff = scales[state].x(d.date);
-       	var topOff = isTop ? 0 : -1; 
-       	var yOff = mouseY + topOff * bbox.height;
+       	var topOff = isTop ? 1 : -1; 
+       	var yOff = mouseY + (topOff * bbox.height / 2);
 		
        	chart.select('.tooltip')
        		.style("right", isLeft ? 'auto' : width - xOff + margin.right + 'px')
@@ -331,9 +342,9 @@
         	.attr("y2",scales["percent"].y(.5))
 
       	g.select(".fifty-percent-label")
-      		.attr("x",width/10)
-      		.attr("y",(scales["percent"].y(.5)+12))
-      		.attr("text-anchor","start")
+      		.attr("x", width / 2)
+      		.attr("y",(scales["percent"].y(0.5) - 5))
+      		// .attr("text-anchor","start")
 
 
       	g.selectAll(".fifty-percent")

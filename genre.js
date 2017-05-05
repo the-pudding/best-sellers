@@ -1,6 +1,10 @@
 (function() {
 
 	//VARS
+	// var colors = ['#d65454', '#eabc3b', '#7564bc', '#3ca0a0', '#5fa0d6']
+	// var colors = ['#eabc3b','#e6a344','#e28a4b','#dc7150','#d65454', '#7564bc','#697ab3','#588eaa','#3ca0a0']
+	// var colors = ['#7564bc','#7273c1','#6d83c2','#6d91bc','#7b9ea8','#96a88d','#b3af72','#d0b657','#eabc3b'].reverse()
+	var colors = ['#0C4840','#114F53','#265463','#415770','#5F5878','#7C5879','#975875','#AC5A6A','#BB605D']
 	var breakpoint = 700;
 	var mobile = false;
 	var addToOther = ['Historical', 'Domestic'];
@@ -76,6 +80,14 @@
 
 	//SETUP
 	// GENRE HELPERS
+	function setupColors() {
+		var dark = colors.map(function(c) {
+			return d3.color(c).brighter(0.7).toString()
+		})
+
+		colors = colors.concat(dark)
+		console.log(colors)
+	}
 
 	function setupScales() {
 		var keys = genderColumns;
@@ -105,11 +117,7 @@
 		scales.genrePercent = {x:genrePX, y:genrePY}
 
 
-		scales.color = d3.scaleOrdinal().domain(keys).range([
-			'#cccccc','#DBDBDB','#c8c8c8','#b5b5b5',
-			'#a3a3a3','#909090','#7d7d7d','#6b6b6b',
-			'#585858','#454545','#666666'
-			])
+		scales.color = d3.scaleOrdinal().domain(keys).range(colors)
 	}
 
 	function setupElements() {
@@ -347,6 +355,7 @@
 	function init() {
 		loadData(function() {
 			// console.log(genreData)
+			// setupColors()
 			setupScales()
 			setupElements()
 			resize() // draw chart
