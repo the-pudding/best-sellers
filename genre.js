@@ -8,7 +8,7 @@
 	var breakpoint = 700;
 	var mobile = false;
 	var addToOther = ['Historical', 'Domestic'];
-	var genderColumns = null;
+	var genreColumns = null;
 	var genreData = null;
 	var scales = {};
 	var margin = { top:10, bottom:25, left:50, right: 130 }
@@ -57,7 +57,7 @@
 
 		target['Other_percent'] = target['Other_count'] / target.total;
 
-		genderColumns = columns.filter(function(col) {
+		genreColumns = columns.filter(function(col) {
 			// is this colum NOT in addToOthers
 			return addToOther.indexOf(col) === -1
 		})
@@ -90,7 +90,7 @@
 	}
 
 	function setupScales() {
-		var keys = genderColumns;
+		var keys = genreColumns;
 
 		// if (cp=='count') {
 		var maxCount = d3.max(genreData,function(d) { return d.total; })
@@ -144,9 +144,20 @@
 			.attr("class","label--y")
 			.attr("text-anchor","middle")
 
+		var revGenreCol = genreColumns.slice().reverse()
+		revGenreCol.map(function(d){
+			var spanClass = "tooltip--"+d.toLowerCase().substr(0,3)
+			chart.select(".tooltip")
+				.append("p")
+				.text(d+":  ")
+				.attr("class",spanClass+" x-small")
+				.append("span")
+		})
+
+
 		// russ
 		chart.select('.mobile-legend').selectAll('li')
-			.data(genderColumns)
+			.data(genreColumns)
 		.enter().append('li')
 			.attr('class', 'tk-atlas')
 			.style('background-color', function(d) {
@@ -260,7 +271,7 @@
 		    .y1(function(d) { return scales[state].y(d[1]); })
 		    .curve(d3.curveMonotoneX);
 
-		var keys = genderColumns.map(function(key) {
+		var keys = genreColumns.map(function(key) {
 			return key + '_' + state;
 		});
 
@@ -296,6 +307,10 @@
 	    drawLegend(width, height)
 	}
 
+	function formatPercent(num) {
+		return d3.format(".0%")(num);
+	}
+
 	function handleMouseMove(d) {
 		var key = d.key
 	    var mouse = d3.mouse(this)
@@ -310,31 +325,45 @@
 		var d0 = genreData[index - 1];
 		var d1 = genreData[index];
 		
-		var d = invertedX - d0.dateParsed > d1.dateParsed - invertedX ? d1 : d0;
+		var mouseD = invertedX - d0.dateParsed > d1.dateParsed - invertedX ? d1 : d0;
 		
 		chart.select(".vertical")
-			.attr("x",(scales[state].x(d.dateParsed)))
+			.attr("x",(scales[state].x(mouseD.dateParsed)))
 
-		var displayYear = +d3.timeFormat("%Y")(d.dateParsed);
+		var displayYear = +d3.timeFormat("%Y")(mouseD.dateParsed);
 		
 		chart.select(".tooltip--year").text(displayYear);
 
+		genreColumns.map(function(d,i){
+			var spanClass = ".tooltip--"+d.toLowerCase().substr(0,3)
+			var genreKey = d+"_"+state
+			var tt = chart.select('.tooltip')
+			var ttSpan = tt.select(spanClass+" span")
+				.text(formatPercent(mouseD[genreKey]))
 
-		genreData.map(function(d){
-			console.log(d)
-			chart.select('.tooltip').append("span")
-
+			if(key === genreKey){
+				tt.select(spanClass)
+				   .style('background-color', scales.color(d))
+				   .classed('selected',true)
+				ttSpan.style("color", "inherit")
+			}else{
+				tt.select(spanClass)
+				   .style('background-color', "transparent")
+				   .classed('selected',false)
+				ttSpan.style("color",scales.color(d))
+			}
 		})
 		
        	var bbox = chart.select('.tooltip').node().getBoundingClientRect()
 
        	var isLeft = mouseX < width / 2;
        	var isTop = mouseY < height / 2;
-       	var xOff = scales[state].x(d.dateParsed);
+       	var xOff = scales[state].x(mouseD.dateParsed);
        	var topOff = isTop ? 0 : -1; 
        	var yOff = mouseY + topOff * bbox.height;
 		
        	chart.select('.tooltip')
+       		.style('visibility', 'visible')
        		.style("right", isLeft ? 'auto' : width - xOff + margin.right + 'px')
        		.style("left", isLeft ? xOff + margin.left + 'px' : "auto")
        		.style("top", yOff + margin.top + topOff + "px")
@@ -351,10 +380,17 @@
 		}
 	}
 
+	function handleMouseOut() {
+		console.log('out')
+		chart.select('.tooltip')
+			.style('visibility', 'hidden');
+	}
+
 	function setupEvents() {
 		chart.selectAll('.toggle__button').on('click', handleToggle);
 		chart.selectAll('.area')
 			.on('mousemove',handleMouseMove)
+			.on('mouseout', handleMouseOut)
 	}
 
 	function resize() {

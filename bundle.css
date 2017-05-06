@@ -140,11 +140,11 @@ main {
   border: 1px solid #ddd;
   color: #333;
   padding: 0.25rem 0.5rem;
-  width: 7rem;
   visibility: hidden;
 }
 
 .chart__gender .tooltip p {
+  width: 7rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -156,14 +156,35 @@ main {
   line-height: 1.25;
 }
 
-.chart__gender p.tooltip--year {
+.chart__genre .tooltip p {
+  width: 9rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  margin: 0;
+  margin-bottom: 0.25rem;
+  line-height: 1.25;
+}
+
+.tooltip .selected {
+  color: white;
+  font-weight: bold;
+  padding: .2rem;
+  margin-left: .1rem;
+  margin-right: .1rem;
+}
+
+.tooltip--year {
   border-bottom: 1px solid #333;
   margin-bottom: 0.5rem;
   padding-bottom: 0.25rem;
   font-weight: bold;
 }
 
-.chart__gender .tooltip span {
+.tooltip span {
   font-weight: bold;
 }
 
