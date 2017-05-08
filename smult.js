@@ -12,6 +12,18 @@
 	var state = 'percent';
 	var fontSize = 12;
 
+	var annotations = [{
+		note: {
+			// title: "Tk annotation goes here I think",
+			label: "Tk annotation goes here I think",
+			wrap: 100,
+		},
+		data: { genre: 'Horror/Paranormal', decade: 2000, percent: 0.56 },
+		dy: -fontSize * 3,
+		dx: fontSize * 2,
+	}]
+
+
 	function formatPercent(num) {
 		return d3.format('.0%')(num);
 	}
@@ -136,51 +148,10 @@
     		.attr('alignment-baseline', 'middle')
     		.classed('is-visible', function(d) { return d.percentW })
     		.text(function(d) { return formatPercent(d.percentM) });
+
+    	g.append('g')
+    		.attr('class', 'annotations')
       	
-
-
-
-  //   	//ADD LABEL FOR EACH SVG
-
-  //   	svg.append("text")
-		// 	.attr("class","genre__label")
-		// 	.style("text-anchor", "end")
-		// 	.style("font-weight","bold")
-		// 	.text(function(d) { 
-		// 		// console.log(d)
-		// 		return d.key; 
-		// 	});
-
-
-  //   	//ADD VALUE LABELS
-  //   	bars.append("text")
-		//     .attr("class", "smult__value")
-		//     .text(function(d){
-		//         if (d.percent_w >= d.percent_m){
-		//           return d3.format(".0%")(d.percent_w);
-		//         } else {
-		//           return d3.format(".0%")(d.percent_m);
-		//         }
-		//     })
-		//     .attr("text-anchor", function(d){
-		//       	if (d.percent_w >= d.percent_m){
-		//           return "end";
-		//         } else {
-		//           return "start";
-		//         }
-		//     })
-
-
-		// //ADD AXES
-		// svg.append("g")
-  //   		.attr("class", "axis axis--y")
-
-  //   	svg.append("g")
- 	// 		.attr("class", "axis axis--x")
-
- 	// 	svg.append("line")
- 	// 		.attr("class", "zero")
-
 	}
 
 	function setupScales() {
@@ -295,37 +266,28 @@
       	decade.select('.decade__year')
       		.attr('x', width / 2)
 
-  //     	var wbars = g.selectAll(".bar.women")
-  //     		.attr("x", function(d) { return scales.x(0); })
-  //     		.attr("width", function(d) { return Math.abs(scales.x(0) - scales.x(d.percent_w)); });
-	
-  //     	var mbars = g.selectAll(".bar.men")
-	 //      	.attr("x", function(d) { return scales.x(-1*d.percent_m); })
-  //   		.attr("width", function(d) { return Math.abs(scales.x(0) - scales.x(d.percent_m)); });
+      	// updateAnnotations
+      	var type = d3.annotationCallout
 
-  //   	g.selectAll(".smult__value")
-  //   		.attr("y", function(d) { return (scales.y(d.decade) + getBandwidth()/2 +5);})
-		//     .attr("x", function(d) {
-		//         if (d.percent_w >= d.percent_m){
-		//           return scales.x((+d.percent_w - .04));
-		//         } else {
-		//           return scales.x(-1*(+d.percent_m - .04));
-		//         }
-		//     })
+		var makeAnnotations = d3.annotation()
+		  .editMode(false)
+		  .type(type)
+		  .accessors({
+		    x: function(d) {
+		    	return scales.percent(d.percent)
+		    },
+		    y: function(d) {
+		    	var i = smultData.findIndex(function(v) { return v.key === d.genre })
+		    	var y = i * (decadeHeight + genrePadding);
+		    	var index = Math.floor((d.decade - decadeExtent[0]) / 10)
+      			var off = index * (barHeight + decadePadding) + titleOffset;
+		    	return y + off;
+		    },
+		  })
+		  .annotations(annotations)
 
-		// drawAxes(g)
-
-		// g.selectAll(".genre__label")
-		// 	.attr("y", height)
-		// 	.attr("x", width)
-
-		// g.select(".zero")
-		// 	.attr("y1", scales.y(d3.timeParse("%Y")("1945")))
-		// 	.attr("x1", scales.x(0))
-		// 	.attr("y2", scales.y(d3.timeParse("%Y")("2025")))
-		// 	.attr("x2", scales.x(0))
-		// 	.style("stroke", "black");
-
+		svg.select('.annotations')
+			.call(makeAnnotations)
 	}
 
 	function setup() {

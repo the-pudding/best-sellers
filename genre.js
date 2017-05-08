@@ -18,6 +18,17 @@
 	var stack = d3.stack();
 	var transitionDuration = 1000;
 
+	var annotations = [{
+		note: {
+			// title: "Tk annotation goes here I think",
+			label: "Tk annotation goes here I think",
+			wrap: 100,
+		},
+		data: {  },
+		dy: -20,
+		dx: 20,
+	}]
+
 	var state = 'percent'
 	var labels = {'count':'Number of books', 'percent':'Percent of books', 'genrePercent':'Percent of genre books'}
 
@@ -170,6 +181,9 @@
 				// return col.darker(5)
 			})
 			.text(function(d) { return d; })
+
+		g.append('g')
+			.attr('class', 'annotations')
 	}
 
 	// SET UP GENRE
@@ -305,6 +319,25 @@
 	    drawLabels(height)
 
 	    drawLegend(width, height)
+
+	    // updateAnnotations
+      	var type = d3.annotationCallout
+
+		var makeAnnotations = d3.annotation()
+		  .editMode(false)
+		  .type(type)
+		  .accessors({
+		    x: function(d) {
+		    	
+		    },
+		    y: function(d) {
+		    	
+		    },
+		  })
+		  .annotations(annotations)
+
+		// svg.select('.annotations')
+		// 	.call(makeAnnotations)
 	}
 
 	function formatPercent(num) {
