@@ -241,11 +241,15 @@
        		.style("left", isLeft ? xOff + margin.left + 'px' : "auto")
        		.style("top", yOff + margin.top + "px")
 
-
+       	chart.select('.vertical')
+			.style('visibility', 'visible');
 	}
 
 	function handleMouseOut() {
 		chart.select('.tooltip')
+			.style('visibility', 'hidden');
+
+		chart.select('.vertical')
 			.style('visibility', 'hidden');
 	}
 

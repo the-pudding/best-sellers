@@ -226,6 +226,7 @@ main {
   fill: #ddd;
   fill-opacity: 0.5;
   pointer-events: none;
+  visibility: hidden;
 }
 
 .chart__gender text {

@@ -400,6 +400,9 @@
        		.style("right", isLeft ? 'auto' : width - xOff + margin.right + 'px')
        		.style("left", isLeft ? xOff + margin.left + 'px' : "auto")
        		.style("top", yOff + margin.top + "px")
+
+       	chart.select(".vertical")
+       		.style('visibility', 'visible')
 	}
 
 	function handleToggle() {
@@ -414,9 +417,11 @@
 	}
 
 	function handleMouseOut() {
-		console.log('out')
 		chart.select('.tooltip')
 			.style('visibility', 'hidden');
+
+		chart.select(".vertical")
+       		.style('visibility', 'hidden')
 	}
 
 	function setupEvents() {
