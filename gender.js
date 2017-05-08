@@ -1,7 +1,7 @@
 (function() {
 
 	//VARS
-	var colors = ['#0C4840','#114F53','#265463','#415770','#5F5878','#7C5879','#975875','#AC5A6A','#BB605D']
+	var colors = ['#0C4B4A','#1D5560','#3A5C74','#5B6283','#7F658B','#A3678C','#C26B86','#DB717A','#EC7E6B']
 
 	var colorF = colors[0]
 	var colorM = colors[8]
@@ -104,7 +104,7 @@
 		g.append("text")
 			.attr("class","area__label area__label--men")
 			.style("text-anchor", "end")
-			.style('fill', d3.color(colorM).darker(2))
+			.style('fill', d3.color(colorM).darker(1.5))
 			.text("Men");
 
 		g.append("text")
@@ -180,25 +180,6 @@
 
 		if (key === 'male') return height * 0.4
 		return height * 0.9
-		// if(state == "percent"){
-		// 	if(key == "male"){
-		// 		return scales[state].y(.55)
-		// 	}else{
-		// 		return scales[state].y(.05)
-		// 	}
-		// }
-
-		// var d = xToData(0.9 * width)
-
-		// k = key+"_count"
-
-		// // console.log(k,d[k])
-
-		// if(key == "male"){
-		// 	return scales[state].y((d["female_count"]+d[k]/2))
-		// } else {
-		// 	return scales[state].y((d[k]/2))
-		// }
 	}
 
 	function drawLabels(g) {
@@ -251,27 +232,19 @@
        	var isLeft = mouseX < width / 2;
        	var isTop = mouseY < height / 2;
        	var xOff = scales[state].x(d.date);
-       	var topOff = isTop ? 1 : -1; 
-       	var yOff = mouseY + (topOff * bbox.height / 2);
+       	var topOff = isTop ? 0 : -1; 
+       	var yOff = mouseY + (topOff * bbox.height);
 		
        	chart.select('.tooltip')
        		.style('visibility', 'visible')
        		.style("right", isLeft ? 'auto' : width - xOff + margin.right + 'px')
        		.style("left", isLeft ? xOff + margin.left + 'px' : "auto")
-       		.style("top", yOff + margin.top + topOff + "px")
+       		.style("top", yOff + margin.top + "px")
 
 
 	}
 
-//Should the tooltip go away when you leave the chart?
-//I think it should.
 	function handleMouseOut() {
-		console.log('out')
-		// chart.select(".vertical")
-		// 	.transition()
-		// 	.duration(transitionDuration)
-		// 	.style("opacity",0)
-
 		chart.select('.tooltip')
 			.style('visibility', 'hidden');
 	}
@@ -334,7 +307,7 @@
 
 	    //drawFiftyPercent()
 
-	    var opacity = state === 'percent' ? 0.5 : 0;
+	    var opacity = state === 'percent' ? 0.75 : 0;
       	g.select(".fifty-percent-line")
       		.attr("x1",scales["percent"].x(d3.timeParse("%Y")("1950")))
         	.attr("y1",scales["percent"].y(.5))

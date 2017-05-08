@@ -10,7 +10,11 @@
 	var chart = d3.select('.chart__smult');
 	var svg = chart.select('svg');
 	var state = 'percent';
+	var fontSize = 12;
 
+	function formatPercent(num) {
+		return d3.format('.0%')(num);
+	}
 
 	// CLEANING FNS
  	function cleanRow(row) {
@@ -47,6 +51,23 @@
 		var meanB = d3.mean(b.values, function(d) { return d.percentW })
 		return d3.ascending(meanA, meanB)
 	}
+
+	function fillEmptyDecades(d) {
+		var years = d3.range(decadeExtent[0], decadeExtent[1] + 10, 10);
+		var values = years.map(function(y) {
+			return d.values.find(function(d) { return d.decade === y }) ||
+			{
+				decade: y,
+				percentW: 0,
+				percentM: 0,
+			}
+		})
+		return { 
+			key: d.key,
+			values: values,
+		}
+	}
+
 	// LOAD THE DATA
 	function loadData(cb) {
 
@@ -60,6 +81,9 @@
 				.key(function(d) { return d.genre })
 				.entries(filtered)
 				.sort(sortGenres)
+				.map(fillEmptyDecades);
+
+			console.log(smultData)
 			cb()
 		});
 	}
@@ -76,16 +100,44 @@
 		 	.enter().append('g')
 				.attr('class', 'genre');
 
+		genreEnter.append('text')
+			.attr('class', 'genre__title')
+			.attr('text-anchor', 'middle')
+    		.attr('alignment-baseline', 'middle')
+			.text(function(d) { return d.key })
+
 		var decade = genreEnter.selectAll('.decade')
 			.data(function(d) { return d.values; })
     		.enter().append('g')
     			.attr('class', 'decade');
+
+    	decade.append('text')
+    		.attr('class', 'decade__year')
+    		.attr('text-anchor', 'middle')
+    		.attr('alignment-baseline', 'middle')
+    		.text(function(d) { return d.decade });
 
       	decade.append('rect')
       		.attr("class", "bar bar--women");
       	
       	decade.append('rect')
     		.attr("class", "bar bar--men");
+
+		decade.append('text')
+      		.attr('class', 'decade__percent decade__percent--women')
+    		.attr('text-anchor', 'start')
+    		.attr('alignment-baseline', 'middle')
+    		.classed('is-visible', function(d) { return d.percentW })
+    		.text(function(d) { return formatPercent(d.percentW) });
+      	
+      	decade.append('text')
+      		.attr('class', 'decade__percent decade__percent--men')
+    		.attr('text-anchor', 'end')
+    		.attr('alignment-baseline', 'middle')
+    		.classed('is-visible', function(d) { return d.percentW })
+    		.text(function(d) { return formatPercent(d.percentM) });
+      	
+
 
 
   //   	//ADD LABEL FOR EACH SVG
@@ -167,10 +219,13 @@
 	function updateChart() {
 		// var margin = {top:25,bottom:10,left:33,right:20}
 		// const ratio = 1.5;
-		var margin = 20;
-		var barHeight = 4;
-		var genrePadding = 50;
-		var decadePadding = 5;
+		var margin = 30;
+		var barHeight = fontSize / 2;
+		var genrePadding = fontSize * 5;
+		var decadePadding = fontSize / 1.25;
+		var textWidth = 20;
+		var titleOffset = 18;
+
 		var numDecades = Math.floor((decadeExtent[1] - decadeExtent[0]) / 10);
 
 		var svgWidth = chart.node().offsetWidth;
@@ -196,31 +251,49 @@
       			return "translate(" + 0 + "," + y + ")";
       		})
 
+      	genre.select('.genre__title')
+      		.attr('x', width / 2)
+
 		var decade = genre.selectAll(".decade")
 			.attr('transform', function(d, i) {
 				var index = Math.floor((d.decade - decadeExtent[0]) / 10)
-      			var y = index * (barHeight + decadePadding);
+      			var y = index * (barHeight + decadePadding) + titleOffset;
       			return "translate(" + 0 + "," + y + ")";
       		})
 
 		decade.selectAll('.bar')
-			.attr('y', 0)
+			.attr('y', -fontSize / 3)
       		.attr("height", barHeight);
 
-      	decade.selectAll('.bar--women')
-      		.attr('x', function(d) {
-      			return scales[state](-d[state + 'W'])
-      		})
+      	decade.select('.bar--women')
+      		.attr('x', width / 2 + textWidth)
       		.attr('width', function(d) {
-      			return (width / 2) - scales[state](-d[state + 'W'])
+      			var v = scales[state](d[state + 'W']) - (width / 2)
+      			return Math.max(v, 0)
       		})
-      		.attr('data-w', function(d) { return d.decade + '-' + d.genre })
 
-      	decade.selectAll('.bar--men')
-      		.attr('x', width / 2)
-      		.attr('width', function(d) {
-      			return scales[state](d[state + 'M']) - (width / 2)
+      	decade.select('.decade__percent--women')
+      		.attr('x', function(d) { 
+      			return scales[state](d[state + 'W']) + textWidth * 1.25
       		})
+      	
+
+      	decade.select('.bar--men')
+      		.attr('x', function(d) {
+      			return scales[state](-d[state + 'M'])
+      		})
+      		.attr('width', function(d) {
+      			var v = (width / 2) - scales[state](-d[state + 'M']) - textWidth
+      			return Math.max(v, 0)
+      		})
+      	
+      	decade.select('.decade__percent--men')
+      		.attr('x', function(d) {
+      			return scales[state](-d[state + 'M']) - textWidth * 0.25
+      		})
+
+      	decade.select('.decade__year')
+      		.attr('x', width / 2)
 
   //     	var wbars = g.selectAll(".bar.women")
   //     		.attr("x", function(d) { return scales.x(0); })
