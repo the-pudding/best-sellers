@@ -348,7 +348,8 @@ p.no-margin {
 
 /* TABLES */
 .chart__tables {
-  max-width: 40rem;  
+  max-width: 35rem;
+  padding: 0 1rem;
   margin: 0 auto;
 }
 
