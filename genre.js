@@ -19,7 +19,7 @@
 	var transitionDuration = 1000;
 
 	var state = 'percent'
-	var labels = {'count':'Count of books', 'percent':'Percent of books', 'genrePercent':'Percent of genre books'}
+	var labels = {'count':'Number of books', 'percent':'Percent of books', 'genrePercent':'Percent of genre books'}
 
 	var chart = d3.select('.chart__genre')
 	var svg = chart.select('svg')

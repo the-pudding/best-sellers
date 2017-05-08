@@ -19,7 +19,7 @@
 	var tooltipTransitionDuration = 500
 
 	var state = 'percent';
-	var labels = {'count':'Count of books', 'percent':'Percent of books'}
+	var labels = {'count':'Number of books', 'percent':'Percent of books'}
 	
 	var chart = d3.select('.chart__gender');
 	var svg = chart.select('svg');
