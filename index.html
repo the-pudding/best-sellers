@@ -225,13 +225,13 @@
 			
 			<p>To answer this question, I looked at the gender of the authors of books on the New York Times Best-Sellers List over time.</p>
 		</div>
+		<h5 class='chart__hed tk-atlas'>Best-Selling Novels by Author Gender</h5>
 		<div class='chart chart__gender'>
-			  <h5 class='chart__hed tk-atlas'>Best-Selling Novels by Author Gender</h5>
 			<svg><g class='container'></g></svg>
 			<div class='tooltip tk-atlas'>
-				<p class='tooltip--year x-small'></p>
-				<p class='tooltip--male x-small'>Male: <span></span></p>
-				<p class='tooltip--female x-small'>Female: <span></span></p>
+				<p class='tooltip--year'></p>
+				<p class='tooltip--male'>Male<span></span></p>
+				<p class='tooltip--female'>Female<span></span></p>
 			</div>
 			<ul class='toggle gender__toggle'>
 				<li>
@@ -252,22 +252,22 @@
 
 		<div class='story__text'>
 			<h3 class='subhed tk-canela'>What happened in the 1990s?</h3>
-
 			<p><i>The Times</i> is famously tight-lipped about how it compiles its best-sellers list, mostly because they don’t want wealthy authors trying to game the system. But, as Danielle Ha Rhoades, VP of Communications, wrote me in an email, “There has been no change in our methodology that would affect the female-to-male author ratio.” You can read the public information on the methodology <a href="https://www.nytimes.com/books/best-sellers/methodology/">here</a>.</p>
 
 			<p>This means that the change in the ratio likely reflects an actual change in the world.</p>
 
 			<p>Since most of this change occurred in the 1990s, I was curious to see whether the authors in that decade were special. Here, binned by decade, are the top-performing authors on the NYTimes Best-Sellers list, as measured by how many books of theirs made the list in that time period.</p>
 
-			<h5 class='chart__hed tk-atlas'>Top authors by decade</h5>
 		</div>
+		<h5 class='chart__hed tk-atlas'>Top authors by decade</h5>
+
+		<h5 class='chart__hed tk-atlas'>Best-Selling Novels by Genre</h5>
 		<div class='chart chart__genre'>
-			<h5 class='chart__hed tk-atlas'>Best-Selling Novels by Genre</h5>
 			<ul class='mobile-legend'></ul>
 			<svg><g class='container'></g></svg>
-			<p class='tooltip tk-atlas'>
-				<span class='tooltip--year x-small'></span>
-			</p>
+			<div class='tooltip tk-atlas'>
+				<p class='tooltip--year'></p>
+			</div>
 			<!-- <ul class='toggle genre__toggle'>
 				<li>
 					<button class='toggle__button' value='count'>Count</button>
@@ -314,7 +314,7 @@
 		<p>Unfortunately our dataset doesn't give us any clues as to what's going on. If the New York Times Best-Sellers list is any indication, Miller's right about the fiction market. The fact that nearly 50% of best-sellers are by women &mdash; even when they're only about a third of the books published, or the books reviewed &mdash; is remarkable. And it probably means there's more demand for female-authored literature than is being supplied or promoted.</p>
 	</main>
 
-
+	<script src='find-polyfill.js'></script>
 	<script src='d3.v4.min.js'></script>
 	<script src='d3-legend.min.js'></script>
 	

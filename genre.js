@@ -4,14 +4,14 @@
 	// var colors = ['#d65454', '#eabc3b', '#7564bc', '#3ca0a0', '#5fa0d6']
 	// var colors = ['#eabc3b','#e6a344','#e28a4b','#dc7150','#d65454', '#7564bc','#697ab3','#588eaa','#3ca0a0']
 	// var colors = ['#7564bc','#7273c1','#6d83c2','#6d91bc','#7b9ea8','#96a88d','#b3af72','#d0b657','#eabc3b'].reverse()
-	var colors = ['#0C4840','#114F53','#265463','#415770','#5F5878','#7C5879','#975875','#AC5A6A','#BB605D']
+	var colors = ['#0C4B4A','#1D5560','#3A5C74','#5B6283','#7F658B','#A3678C','#C26B86','#DB717A','#EC7E6B']
 	var breakpoint = 700;
 	var mobile = false;
 	var addToOther = ['Historical', 'Domestic'];
 	var genreColumns = null;
 	var genreData = null;
 	var scales = {};
-	var margin = { top:10, bottom:25, left:50, right: 130 }
+	var margin = { top:10, bottom:25, left: 50, right: 130 }
 	var width = 0
 	var height = 0
 	var ratio = 1.75;
@@ -149,7 +149,7 @@
 			var spanClass = "tooltip--"+d.toLowerCase().substr(0,3)
 			chart.select(".tooltip")
 				.append("p")
-				.text(d+":  ")
+				.text(d)
 				.attr("class",spanClass+" x-small")
 				.append("span")
 		})
@@ -238,7 +238,7 @@
 		var svg_height =  Math.floor(svg_width / ratio)
 
 
-		margin.right = mobile ? 20 : 130;
+		margin.right = mobile ? 20 : 135;
 			
 		svg.select(".legend-container")
 			.classed('is-hidden', mobile);
@@ -360,13 +360,13 @@
        	var isTop = mouseY < height / 2;
        	var xOff = scales[state].x(mouseD.dateParsed);
        	var topOff = isTop ? 0 : -1; 
-       	var yOff = mouseY + topOff * bbox.height;
+       	var yOff = mouseY + (topOff * bbox.height);
 		
        	chart.select('.tooltip')
        		.style('visibility', 'visible')
        		.style("right", isLeft ? 'auto' : width - xOff + margin.right + 'px')
        		.style("left", isLeft ? xOff + margin.left + 'px' : "auto")
-       		.style("top", yOff + margin.top + topOff + "px")
+       		.style("top", yOff + margin.top + "px")
 	}
 
 	function handleToggle() {

@@ -10,7 +10,7 @@ p {
 }
 a {
   text-decoration: none;
-  border-bottom: 2px solid #BB605D;
+  border-bottom: 2px solid #EC7E6B;
   color: #2a2a2a;
 }
 a:visited,
@@ -91,40 +91,36 @@ main {
 }
 
 /* SMULT */
-.bar.women {
-  fill: steelblue;
-}
-
-.bar.men {
-  fill: grey;
-}
-
 .chart__smult {
   
 }
 
 .bar--women {
-  fill: #0C4840;
+  fill: #0C4B4A;
 }
 
 .bar--men {
-  fill: #BB605D;
+  fill: #EC7E6B;
 }
 
-.chart__smult svg {
-  margin: .25rem;
+.genre__title {
+  font-size: 14px;
 }
 
-.smult__value{
-  font: 11px sans-serif;
-  fill: white;
+.decade text {
+  font-size: 12px;
+  fill: #888;
 }
 
-.genre__label{
-  font: 14px sans-serif;
+.decade .decade__percent {
+  visibility: hidden;
+  fill: #aaa;
+  font-size: 10px;
 }
 
-
+.decade__percent.is-visible {
+  visibility: visible;
+}
 
 
 /* GENDER */
@@ -132,7 +128,7 @@ main {
   
 }
 
-.tooltip {
+.chart .tooltip {
   position: absolute;
   pointer-events: none;
   background-color: rgba(255,255,255,0.9);
@@ -143,8 +139,8 @@ main {
   visibility: hidden;
 }
 
-.chart__gender .tooltip p {
-  width: 7rem;
+.chart .tooltip p {
+  font-size: 12px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -154,33 +150,25 @@ main {
   margin: 0;
   margin-bottom: 0.25rem;
   line-height: 1.25;
+  border-bottom: 1px dotted #ccc;
+}
+.chart__gender .tooltip p {
+  width: 6rem;
 }
 
 .chart__genre .tooltip p {
   width: 9rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-justify-content: space-between;
-  justify-content: space-between;
-  margin: 0;
-  margin-bottom: 0.25rem;
-  line-height: 1.25;
+  padding: 0 0.25rem;
 }
 
-.tooltip .selected {
-  color: white;
+.chart__genre .tooltip .selected {
+  color: #fff;
   font-weight: bold;
-  padding: .2rem;
-  margin-left: .1rem;
-  margin-right: .1rem;
 }
 
-.tooltip--year {
-  border-bottom: 1px solid #333;
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.25rem;
+.chart p.tooltip--year {
+  border-bottom: none;
+  margin-bottom: 0.25rem;
   font-weight: bold;
 }
 
@@ -189,11 +177,11 @@ main {
 }
 
 .chart__gender .tooltip--male span {
-  color: #BB605D;
+  color: #EC7E6B;
 }
 
 .chart__gender .tooltip--female span {
-  color: #0C4840;
+  color: #0C4B4A;
 }
 
 
@@ -216,6 +204,7 @@ main {
 .vertical {
   fill: #ddd;
   fill-opacity: 0.5;
+  pointer-events: none;
 }
 
 .chart__gender text {
@@ -296,18 +285,6 @@ main {
 
 .toggle li {
   display: inline-block;
-}
-
-.tooltip {
-  position: absolute;
-  text-align: left;
-  padding: 6px;
-  font: 13px sans-serif;
-  line-height: 15px;
-  background: white;
-  border: 0px;
-  border-radius: 8px;
-  pointer-events: none;
 }
 
 .chart__genre .mobile-legend {
