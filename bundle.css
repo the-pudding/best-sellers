@@ -314,6 +314,57 @@ p.no-margin {
   margin-bottom: 0;
 }
 
+
+/* TABLES */
+.chart__tables {
+  
+}
+.chart__tables table {
+  width: 100%;
+  margin: 1rem auto;
+  max-width: 40rem;
+  border-collapse: collapse;
+  border-spacing: 0;
+  /*table-layout: fixed;*/
+}
+
+.chart__tables thead {
+  border-bottom: 2px solid #ddd;
+  font-size: 10px;
+}
+
+.chart__tables tbody {
+  font-size: 12px;
+}
+
+.chart__tables tr {
+  border-bottom: 1px solid #ddd;
+  color: #222;
+}
+.chart__tables tr.highlight {
+  background-color: #dcf1f0 !important;
+}
+.chart__tables zebra tr:nth-child(even) {
+  background-color: #f6f6f6;
+}
+.chart__tables th {
+  font-weight: bold;
+  padding: 0.35em;
+  display: table-cell;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.chart__tables td {
+  padding: 0.35em;
+  display: table-cell;
+}
+.chart__tables .highlight td {
+  font-weight: bold;
+}
+.chart__tables th.is-number, td.is-number {
+  text-align: right;
+}
+
 @media only screen and (min-width: 700px) {
   .chart__genre .mobile-legend {
     display: none;
@@ -328,6 +379,16 @@ p.no-margin {
 @media only screen and (min-width: 40em) {
   .hack {
     display: none;
+  }
+  .chart__tables thead {
+    font-size: 12px;
+  }
+
+  .chart__tables tbody {
+    font-size: 14px;
+  }
+  .chart__tables tbody td:first-child, .chart__tables thead td:first-child {
+    width: 12rem;
   }
 }
 @media only screen and (min-width: 50em) {

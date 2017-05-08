@@ -195,14 +195,14 @@
 		g.select(".area__label--women")
 			.transition()
 			.duration(transitionDuration)
-			.attr("x", .925 * width)
+			.attr("x", .95 * width)
 			.attr("y", yWomen)
 			.style("text-anchor", "end")
 
 		g.select(".area__label--men")
 			.transition()
 			.duration(transitionDuration)
-			.attr("x", .925 * width)
+			.attr("x", .95 * width)
 			.attr("y", yMen)
 			.style("text-anchor", "end")
 	}

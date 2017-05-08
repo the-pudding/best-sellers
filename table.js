@@ -1,6 +1,6 @@
 (function() {
 	var tableData = null
-	var tableCols = null
+	var tableCols = ["name", "gender", "genre", "rank", "count"]
 	var chart = d3.select('.chart__tables')
 
 	function cleanRow(row) {
@@ -11,9 +11,6 @@
 			name: row.Name,
 			gender: row.Gender,
 			genre: row["Primary Genre"],
-		}
-		if(tableCols === null){
-			tableCols = Object.keys(target)
 		}
 		return target
 	}
@@ -30,7 +27,6 @@
 
 	function setupElements(){
 		var dataToPass = null
-		console.log("inside setup")
 		var tables = chart.selectAll("table")
 				.data(tableData)
 				.enter()
@@ -38,18 +34,21 @@
 		tables.append('caption')
 			.text(function(d) {return d.key})
 		var tableHead = tables.append('thead')
-		var tableRow = tables.selectAll('tbody')
+		var tableBody = tables.append('tbody')
+
+		var tableRow = tableBody.selectAll('tr')
 				.data(function(d) {return d.values;})
 				.enter()
 				.append('tr')
 
 		tableCols.map(function(k){
-			if(k!="decade"){
-				tableHead.append('th')
-					.text(k)
-				tableRow.append('td')
-					.text(function(d){ return d[k]})
-			}
+			tableHead.append('th')
+				.classed('is-number', function(d) { return k === 'rank' || k === 'count' })
+				.text(k)
+
+			tableRow.append('td')
+				.classed('is-number', function(d) { return k === 'rank' || k === 'count' })
+				.text(function(d){ return d[k]})
 		})
 
 //		tableHead.text(function(d){ return d.key })
@@ -57,7 +56,6 @@
 
 	function init() {
 		loadData(function() {
-			console.log(tableData)
 			setupElements()
 		})
 	}
