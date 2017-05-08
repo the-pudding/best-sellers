@@ -61,7 +61,6 @@ main {
   padding: 0.5rem;
   line-height: 1;
   width: 5rem;
-  font-size: 0.7rem;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -104,7 +103,8 @@ main {
 }
 
 .genre__title {
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .decade text {
@@ -122,6 +122,27 @@ main {
   visibility: visible;
 }
 
+.chart__key {
+  height: 100%;
+  overflow: hidden;
+}
+.chart__key li {
+  width: 50%;
+  float: left;
+  padding: 0 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.chart__key .key--men {
+  text-align: right;
+  color: #EC7E6B;
+}
+
+.chart__key .key--women {
+  color: #0C4B4A;
+}
 
 /* GENDER */
 .chart__gender {
@@ -285,6 +306,16 @@ main {
 
 .toggle li {
   display: inline-block;
+  margin: 0 0.2rem;
+}
+
+.chart__tables .btn {
+  width: auto;
+  padding: 0.25rem;
+}
+
+.chart__tables .toggle li {
+  margin: 0.1rem;
 }
 
 .chart__genre .mobile-legend {
@@ -317,15 +348,30 @@ p.no-margin {
 
 /* TABLES */
 .chart__tables {
-  
+  max-width: 40rem;  
+  margin: 0 auto;
 }
+
+.tables__container {
+  min-height: 360px;
+}
+
 .chart__tables table {
   width: 100%;
   margin: 1rem auto;
-  max-width: 40rem;
   border-collapse: collapse;
   border-spacing: 0;
-  /*table-layout: fixed;*/
+  display: none;
+}
+
+.chart__tables caption {
+  margin-bottom: 0.5rem;
+  /*text-align:  center;*/
+  width: 100%;
+}
+
+.chart__tables table.is-active {
+  display: table;
 }
 
 .chart__tables thead {
@@ -350,13 +396,13 @@ p.no-margin {
 .chart__tables th {
   font-weight: bold;
   padding: 0.35em;
-  display: table-cell;
+  /*display: table-cell;*/
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 .chart__tables td {
   padding: 0.35em;
-  display: table-cell;
+  /*display: table-cell;*/
 }
 .chart__tables .highlight td {
   font-weight: bold;
@@ -364,6 +410,8 @@ p.no-margin {
 .chart__tables th.is-number, td.is-number {
   text-align: right;
 }
+
+
 
 @media only screen and (min-width: 700px) {
   .chart__genre .mobile-legend {
@@ -388,7 +436,23 @@ p.no-margin {
     font-size: 14px;
   }
   .chart__tables tbody td:first-child, .chart__tables thead td:first-child {
-    width: 12rem;
+    width: 11rem;
+  }
+
+  .chart__tables tbody td:nth-child(2), .chart__tables thead td:nth-child(2) {
+    width: 6rem;
+  }
+
+  .chart__tables tbody td:nth-child(3), .chart__tables thead td:nth-child(3) {
+    width: 10rem;
+  }
+
+  .chart__tables .toggle li {
+    margin: 0.2rem;
+  }
+
+  .chart__tables .btn {
+    width: 3rem;
   }
 }
 @media only screen and (min-width: 50em) {

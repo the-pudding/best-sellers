@@ -235,10 +235,9 @@
 			</div>
 			<ul class='toggle gender__toggle'>
 				<li>
-					<button class='btn toggle__button is-active' value='percent'>Percent</button>
-				</li>
-				<li>
-					<button class='btn toggle__button' value='count'>Count</button>
+					<button class='btn toggle__button is-active xx-small' value='percent'>Percent</button>
+				</li><li>
+					<button class='btn toggle__button xx-small' value='count'>Count</button>
 				</li>
 			</ul>
 		</div>
@@ -262,8 +261,8 @@
 		<h5 class='chart__hed tk-atlas'>Top authors by decade</h5>
 
 		<div class='chart chart__tables tk-atlas'>
-			<div class='container'>
-			</div>
+			<ul class='toggle tables__toggle'></ul>
+			<div class='tables__container'></div>
 		</div>
 
 		<div class='story__text'>
@@ -292,17 +291,6 @@
 			<div class='tooltip tk-atlas'>
 				<p class='tooltip--year'></p>
 			</div>
-			<!-- <ul class='toggle genre__toggle'>
-				<li>
-					<button class='toggle__button' value='count'>Count</button>
-				</li>
-				<li>
-					<button class='toggle__button is-active' value='percent'>Percent</button>
-				</li>
-				<li>
-					<button class='toggle__button' value='genrePercent'>Genres only</button>
-				</li>
-			</ul> -->
 		</div>
 		<div class='story__text'>
 			<p>To learn more, I roughly categorized every book on the list by genre. Books that didn’t seem to fall into a genre I labeled “Literary/None”. The result of this research is in the chart above, which I encourage you to explore. As you can see, genre fiction at large enjoyed a heyday through the 1980s and 90s.</p>
@@ -311,6 +299,10 @@
 		</div>
 		<h5 class='chart__hed tk-atlas'>Gender Ratio of the Best-Selling Genres by Decade</h5>
 		<div class='chart chart__smult'>
+			<ul class='chart__key tk-atlas'>
+				<li class='key__value key--men xx-small'>&larr; Percent Men</li>
+				<li class='key__value key--women xx-small'>Percent Women &rarr;</li>
+			</ul>
 			<svg><g class='container'></g></svg>
 		</div>
 		<div class='story__text'>
