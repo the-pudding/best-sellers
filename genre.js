@@ -22,7 +22,7 @@
 			wrap: 180,
 		},
 		data: { genre: 'Fantasy/Scifi', date: d3.timeParse('%Y')('1980'), percent: .1 },
-		px: -15,
+		px: -10,
 		py: -30
 	}, {
 		note: {
@@ -349,7 +349,6 @@
 		    	return scales[state].x(d.date);
 		    },
 		    y: function(d) {
-		    	console.log(state, d[state])
 		    	var y = scales[state].y(d[state]);
 		    	return y;
 		    },
