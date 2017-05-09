@@ -412,7 +412,9 @@ p.no-margin {
   text-align: right;
 }
 
-
+.is-hidden {
+  display: none;
+}
 
 @media only screen and (min-width: 700px) {
   .chart__genre .mobile-legend {

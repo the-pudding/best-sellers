@@ -1,9 +1,6 @@
 (function() {
 
 	//VARS
-	// var colors = ['#d65454', '#eabc3b', '#7564bc', '#3ca0a0', '#5fa0d6']
-	// var colors = ['#eabc3b','#e6a344','#e28a4b','#dc7150','#d65454', '#7564bc','#697ab3','#588eaa','#3ca0a0']
-	// var colors = ['#7564bc','#7273c1','#6d83c2','#6d91bc','#7b9ea8','#96a88d','#b3af72','#d0b657','#eabc3b'].reverse()
 	var colors = ['#0C4B4A','#1D5560','#3A5C74','#5B6283','#7F658B','#A3678C','#C26B86','#DB717A','#EC7E6B']
 	var breakpoint = 700;
 	var mobile = false;
@@ -91,15 +88,6 @@
 
 	//SETUP
 	// GENRE HELPERS
-	function setupColors() {
-		var dark = colors.map(function(c) {
-			return d3.color(c).brighter(0.7).toString()
-		})
-
-		colors = colors.concat(dark)
-		console.log(colors)
-	}
-
 	function setupScales() {
 		var keys = genreColumns;
 
@@ -438,8 +426,6 @@
 
 	function init() {
 		loadData(function() {
-			// console.log(genreData)
-			// setupColors()
 			setupScales()
 			setupElements()
 			resize() // draw chart

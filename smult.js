@@ -1,6 +1,7 @@
 (function() {
 
 	//VARS
+	var mobile = false;
 	var smultData = null;
 	var decadeExtent = null;
 	var countMax = 0;
@@ -15,12 +16,50 @@
 	var annotations = [{
 		note: {
 			// title: "Tk annotation goes here I think",
-			label: "Tk annotation goes here I think",
-			wrap: 100,
+			label: "Most books are in this category, and it closely matches the overall gender ratio",
+			wrap: 180,
+		},
+		data: { genre: 'Literary/None', decade: 1940, percent: 0, dir: 1 },
+		px: 15,
+		py: -3
+	}, {
+		note: {
+			// title: "Tk annotation goes here I think",
+			label: "Since 195x, the majority of female-authored Horror/Paranormal books fall into the category of Paranormal Romance",
+			wrap: 180,
 		},
 		data: { genre: 'Horror/Paranormal', decade: 2000, percent: 0.56 },
-		dy: -fontSize * 3,
-		dx: fontSize * 2,
+		px: 3,
+		py: -3
+	}, {
+		note: {
+			// title: "Tk annotation goes here I think",
+			label: "Most Mystery books by women on the list in the 1970s were by Agatha Christie",
+			wrap: 180,
+		},
+		data: { genre: 'Mystery', decade: 1970, percent: 0.4 },
+		px: 12,
+		py: 3
+	}]
+
+	var annotations2 = [{
+		note: {
+			// title: "Tk annotation goes here I think",
+			label: "Consistently male-dominated genres",
+			wrap: 120,
+		},
+		data: { genreFrom: 'Spy/Politics', genreTo: 'Fantasy/Scifi', decadeFrom: 1950, decadeTo: 2010, percent: 0.3, dir: 1 },
+		px: 3,
+		py: 3
+	},  {
+		note: {
+			// title: "Tk annotation goes here I think",
+			label: "Relatively small genres, but gender balanced or female-dominated",
+			wrap: 120,
+		},
+		data: { genreFrom: 'Historical', genreTo: 'Domestic', decadeFrom: 1950, decadeTo: 2010, percent: -0.7, dir: -1 },
+		px: -2,
+		py: -3
 	}]
 
 
@@ -42,19 +81,11 @@
 	 		countW: countW,
 	 		countTotal: countTotal,
 	 		countM: countM,
-			// decade: d3.timeParse('%Y')(row.decade),
 			decade: +row.decade,
 			genre: row.genre,
 		}
 
 		return out;
-	  // 	if ((row.genre!="zz_needs label") && (genre_total > 10)) {
-	  //   	target["percent_w"] = +row.percent;
-	  //   	target["percent_m"] = 1 - +row.percent;
-			// target["decade"] = d3.timeParse('%Y')(row.decade);
-			// target["genre"] = row.genre;
-	  // 		return target
-	  // 	}
 	}
 
 
@@ -93,9 +124,9 @@
 				.key(function(d) { return d.genre })
 				.entries(filtered)
 				.sort(sortGenres)
-				.map(fillEmptyDecades);
+				.map(fillEmptyDecades)
+				.filter(function(d) { return d.key !== 'Other' });
 
-			console.log(smultData)
 			cb()
 		});
 	}
@@ -150,7 +181,10 @@
     		.text(function(d) { return formatPercent(d.percentM) });
 
     	g.append('g')
-    		.attr('class', 'annotations')
+    		.attr('class', 'annotations-1')
+
+    	g.append('g')
+    		.attr('class', 'annotations-2')
       	
 	}
 
@@ -190,7 +224,7 @@
 	function updateChart() {
 		// var margin = {top:25,bottom:10,left:33,right:20}
 		// const ratio = 1.5;
-		var margin = 30;
+		var margin = { top: 30, left: mobile ? 30 : 100 };
 		var barHeight = fontSize / 2;
 		var genrePadding = fontSize * 5;
 		var decadePadding = fontSize / 1.25;
@@ -201,10 +235,10 @@
 
 		var svgWidth = chart.node().offsetWidth;
 		var decadeHeight = numDecades * (barHeight + decadePadding);
-		var svgHeight = (decadeHeight + genrePadding) * smultData.length + (margin * 2);
+		var svgHeight = (decadeHeight + genrePadding) * smultData.length + (margin.top * 2);
 		
-		width = svgWidth - margin * 2;
-		height = svgHeight - margin * 2;
+		width = svgWidth - margin.left * 2;
+		height = svgHeight - margin.top * 2;
 
 		svg
 			.attr('width', svgWidth)
@@ -212,7 +246,7 @@
 
 		var g = svg.select(".container")
 		
-		g.attr("transform", "translate(" + margin + "," + margin + ")")
+		g.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
       	updateScales()
 
@@ -269,12 +303,20 @@
       	// updateAnnotations
       	var type = d3.annotationCallout
 
+      	var offset = Math.round(width * 0.01)
+      	annotations.forEach(function(d) {
+      		d.dx = offset * d.px
+      		d.dy = offset * d.py
+      	})
+
 		var makeAnnotations = d3.annotation()
 		  .editMode(false)
 		  .type(type)
 		  .accessors({
 		    x: function(d) {
-		    	return scales.percent(d.percent)
+		    	var x = scales.percent(d.percent)
+		    	var buffer = d.percent ? 0 : textWidth * 3 * d.dir
+		    	return x + buffer
 		    },
 		    y: function(d) {
 		    	var i = smultData.findIndex(function(v) { return v.key === d.genre })
@@ -286,8 +328,74 @@
 		  })
 		  .annotations(annotations)
 
-		svg.select('.annotations')
+		svg.select('.annotations-1')
 			.call(makeAnnotations)
+			.classed('is-hidden', mobile)
+
+
+
+
+			// updateAnnotations2
+      	var type2 = d3.annotationXYThreshold
+
+      	// var offset = Math.round(width * 0.01)
+      	annotations2.forEach(function(d) {
+      		var x = scales.percent(d.data.percent) + textWidth * 3 * d.data.dir
+      		var i1 = smultData.findIndex(function(v) { return v.key === d.data.genreFrom })
+	    	var y1 = i1 * (decadeHeight + genrePadding);
+	    	var index1 = Math.floor((d.data.decadeFrom - decadeExtent[0]) / 10)
+  			var off1 = index1 * (barHeight + decadePadding) + titleOffset;
+  			
+  			var i2 = smultData.findIndex(function(v) { return v.key === d.data.genreTo })
+	    	var y2 = i2 * (decadeHeight + genrePadding);
+	    	var index2 = Math.floor((d.data.decadeTo - decadeExtent[0]) / 10)
+  			var off2 = index2 * (barHeight + decadePadding) + titleOffset;
+
+      		d.subject = {
+      			x1: x,
+      			y1: y1 + off1,
+      			x2: x,
+      			y2: y2 + off2,
+      		}
+
+      		d.dx = offset * d.px
+      		d.dy = offset * d.py
+
+      		// console.log(d)
+      	})
+
+		var makeAnnotations2 = d3.annotation()
+		  .editMode(false)
+		  .type(type2)
+		  .accessors({
+		    x: function(d) {
+		    	var x = scales.percent(d.percent)
+		    	var buffer = textWidth * 3 * d.dir
+		    	return x + buffer
+		    },
+		    y: function(d) {
+		    	var i1 = smultData.findIndex(function(v) { return v.key === d.genreFrom })
+		    	var y1 = i1 * (decadeHeight + genrePadding);
+		    	var index1 = Math.floor((d.decadeFrom - decadeExtent[0]) / 10)
+		    	var off1 = index1 * (barHeight + decadePadding) + titleOffset;
+
+		    	var i2 = smultData.findIndex(function(v) { return v.key === d.genreTo })
+		    	var y2 = i2 * (decadeHeight + genrePadding);
+		    	var index2 = Math.floor((d.decadeTo - decadeExtent[0]) / 10)
+		    	var off2 = index2 * (barHeight + decadePadding) + titleOffset;
+      		
+      			var half = (y2 + off2 - y1 + off1) / 2
+		    	return y1 + half
+		    },
+		  })
+		  .annotations(annotations2)
+
+		svg.select('.annotations-2')
+			.call(makeAnnotations2)
+			.classed('is-hidden', mobile)
+
+
+
 	}
 
 	function setup() {
@@ -295,13 +403,14 @@
 	}
 
 	function resize() {
+		var breakpoint = 800;
+		var w = d3.select('body').node().offsetWidth;
+		mobile = w < breakpoint;
 		updateChart()
 	}
 
 	function init() {
 		loadData(function() {
-			// console.log("smult",smultData)
-			// console.log(countMax)
 			setup()
 			resize()
 			window.addEventListener('resize', resize)
