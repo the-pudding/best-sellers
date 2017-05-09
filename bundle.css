@@ -24,18 +24,24 @@ a:hover {
 
 .reception {
   color: #f47862;
-  color: #fbe4df;
+  /*color: #fbe4df;*/
 }
 
-.story__text blockquote {
-  background-color: #EC7E6B;
-  padding: 1rem;
-  border-radius: 3px;
+blockquote {
+  padding: 0 1rem;
 }
-.story__text blockquote p {
+
+blockquote p {
+  margin: 0;
+}
+.story__text .exchange {
+  /*background-color: #EC7E6B;*/
+  /*border-radius: 3px;*/
+}
+.story__text .exchange p {
   text-align: center;
   margin: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 .intro {
   margin: 5rem auto;
