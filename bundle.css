@@ -24,13 +24,18 @@ a:hover {
 
 .reception {
   color: #f47862;
+  color: #fbe4df;
 }
 
 .story__text blockquote {
+  background-color: #EC7E6B;
+  padding: 1rem;
+  border-radius: 3px;
 }
 .story__text blockquote p {
   text-align: center;
   margin: 0;
+  margin-bottom: 0.5rem;
 }
 .intro {
   margin: 5rem auto;
