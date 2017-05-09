@@ -454,6 +454,11 @@ p.no-margin {
   display: none;
 }
 
+.methodology {
+  border-top: 1px solid #ccc;
+  padding-top: 0.5rem;
+}
+
 @media only screen and (min-width: 700px) {
   .chart__genre .mobile-legend {
     display: none;
