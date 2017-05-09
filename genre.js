@@ -15,15 +15,35 @@
 	var stack = d3.stack();
 	var transitionDuration = 1000;
 
-	var annotations = [{
+	var annotations1 = [{
 		note: {
-			// title: "Tk annotation goes here I think",
-			label: "Tk annotation goes here I think",
-			wrap: 100,
+			title: "1980s",
+			label: "Sudden surge in Fantasy/Scifi",
+			wrap: 180,
 		},
-		data: {  },
-		dy: -20,
-		dx: 20,
+		data: { genre: 'Fantasy/Scifi', date: d3.timeParse('%Y')('1980'), percent: .1 },
+		px: -15,
+		py: -30
+	}, {
+		note: {
+			title: "1989",
+			label: "Cold war ends, Spy/Politics fiction drops in popularity",
+			wrap: 180,
+		},
+		data: { genre: 'Spy/Politics', date: d3.timeParse('%Y')('1989'), percent: 0.5 },
+		px: -3,
+		py: -9
+	}]
+
+	var annotations2 = [{
+		note: {
+			title: "1990s",
+			label: "Gender ratio approaches 50/50",
+			wrap: 150,
+		},
+		data: { genre: 'Literary/None', dateFrom: d3.timeParse('%Y')('1990'), dateTo: d3.timeParse('%Y')('2000'), percent: 0.5 },
+		px: -3,
+		py: -9
 	}]
 
 	var state = 'percent'
@@ -171,7 +191,10 @@
 			.text(function(d) { return d; })
 
 		g.append('g')
-			.attr('class', 'annotations')
+			.attr('class', 'annotations-1')
+
+		g.append('g')
+			.attr('class', 'annotations-2')
 	}
 
 	// SET UP GENRE
@@ -292,7 +315,9 @@
 
 		var enterLayer = layer.enter()
 			.append('path')
-			.attr('class', 'area')
+			.attr('class', function(d) {
+				return 'area ' + d.key;
+			})
 
 
 		layer.merge(enterLayer)
@@ -308,38 +333,46 @@
 
 	    drawLegend(width, height)
 
-	    // updateAnnotations
-      	var type = d3.annotationCallout
+	    var type = d3.annotationCallout
+
+      	var offset = Math.round(width * 0.01)
+      	annotations1.forEach(function(d) {
+      		d.dx = offset * d.px
+      		d.dy = offset * d.py
+      	})
 
 		var makeAnnotations = d3.annotation()
 		  .editMode(false)
 		  .type(type)
 		  .accessors({
 		    x: function(d) {
-		    	
+		    	return scales[state].x(d.date);
 		    },
 		    y: function(d) {
-		    	
+		    	console.log(state, d[state])
+		    	var y = scales[state].y(d[state]);
+		    	return y;
 		    },
 		  })
-		  .annotations(annotations)
+		  .annotations(annotations1)
 
-		// svg.select('.annotations')
-		// 	.call(makeAnnotations)
+		svg.select('.annotations-1')
+			.call(makeAnnotations)
+			.classed('is-hidden', mobile)
 	}
 
 	function formatPercent(num) {
 		return d3.format(".0%")(num);
 	}
 
-	function handleMouseMove(d) {
-		var key = d.key
+	function handleMouseMove(datum) {
+		var key = datum.key
 	    var mouse = d3.mouse(this)
 	    var mouseX = mouse[0]
 	    var mouseY = mouse[1]
 	    var invertedX = scales[state].x.invert(mouseX)
 
-	    var bisectDate = d3.bisector(d => d.dateParsed).left;
+	    var bisectDate = d3.bisector(function(d)  { return d.dateParsed}).left;
 
 	    var index = bisectDate(genreData, invertedX, 1)
 
@@ -354,7 +387,7 @@
 		var displayYear = +d3.timeFormat("%Y")(mouseD.dateParsed);
 		
 		chart.select(".tooltip--year").text(displayYear);
-
+		
 		genreColumns.map(function(d,i){
 			var spanClass = ".tooltip--"+d.toLowerCase().substr(0,3)
 			var genreKey = d+"_"+state
@@ -391,6 +424,16 @@
 
        	chart.select(".vertical")
        		.style('visibility', 'visible')
+
+       	chart.selectAll('.area')
+       		.classed('is-active', function(d) {
+       			return d.key === key;
+       		})
+
+   		chart.selectAll('.area')
+       		.classed('is-inactive', function(d) {
+       			return d.key !== key;
+       		})
 	}
 
 	function handleToggle() {
@@ -410,6 +453,12 @@
 
 		chart.select(".vertical")
        		.style('visibility', 'hidden')
+
+       	chart.selectAll('.area')
+       		.classed('is-active', false);
+
+   		chart.selectAll('.area')
+       		.classed('is-inactive', false);
 	}
 
 	function setupEvents() {

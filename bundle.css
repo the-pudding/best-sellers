@@ -289,6 +289,18 @@ main {
 
 .chart__genre .area {
   stroke: none;
+  -webkit-transition: fill-opacity 200ms;
+  transition: fill-opacity 200ms;
+}
+
+.chart__genre .area.is-inactive {
+  stroke: none;
+  fill-opacity: 0.85;
+}
+
+.chart__genre .area.is-active {
+  stroke: none;
+  fill-opacity: 1;
 }
 
 .legend-container.is-hidden {

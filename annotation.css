@@ -7,6 +7,12 @@
   fill: none;
 }
 
+.chart__genre .annotation path {
+  stroke: #fff;
+  stroke-opacity: 0.5;
+  fill: none;
+}
+
 .annotation text,
 .annotation .annotation-connector .connector-dot,
 .annotation path.connector-arrow,
@@ -21,6 +27,13 @@
 .annotation-note-label {
   font-size: 12px;
 }
+
+
+.chart__genre .annotation text {
+  fill: #fff;
+  font-weight: bold;
+}
+
 
 .annotation-note-bg {
   fill: rgba(0, 0, 0, 0);;
