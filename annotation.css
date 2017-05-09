@@ -1,7 +1,9 @@
 :root {
     --annotation-color: #ccc;
 }
-
+.annotation {
+  pointer-events: none;
+}
 .annotation path {
   stroke: var(--annotation-color);
   fill: none;
