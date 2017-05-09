@@ -38,7 +38,7 @@
 			.enter()
 				.append('table')
 				.attr('class', function(d) { return 'table-' + d.key })
-				.classed('is-active', function(d, i) { return !i })
+				.classed('is-active', function(d, i) { return i === 4 })
 
 		tables.append('caption')
 			.text(function(d) {return 'Top authors in the ' + d.key + 's by number of books' })
@@ -83,7 +83,7 @@
 			.attr('class', 'btn toggle__button xxx-small')
 			.attr('value', function(d) { return d.key })
 			.text(function(d) { return d.key })
-			.classed('is-active', function(d, i) { return !i })
+			.classed('is-active', function(d, i) { return i === 4 })
 	}
 
 	function handleToggle() {

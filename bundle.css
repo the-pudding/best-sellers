@@ -17,6 +17,21 @@ a:visited,
 a:hover {
   color: #2a2a2a;
 }
+
+.jackson {
+  color: #0C4B4A;
+}
+
+.reception {
+  color: #f47862;
+}
+
+.story__text blockquote {
+}
+.story__text blockquote p {
+  text-align: center;
+  margin: 0;
+}
 .intro {
   margin: 5rem auto;
 }
