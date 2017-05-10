@@ -359,7 +359,7 @@ main {
 
 .chart__tables .btn {
   width: auto;
-  padding: 0.25rem;
+  padding: 0.5rem 0.25rem;
 }
 
 .chart__tables .toggle li {
@@ -507,6 +507,7 @@ p.no-margin {
   }
 
   .chart__tables .btn {
+    padding: 0.5rem 0.25rem;
     width: 3rem;
   }
 }
