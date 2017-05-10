@@ -16,21 +16,12 @@
 	var annotations = [{
 		note: {
 			// title: "Tk annotation goes here I think",
-			label: "Most best-selling books are in this category, and it closely matches the overall gender ratio",
-			wrap: 180,
-		},
-		data: { genre: 'Literary/None', decade: 1940, percent: 0, dir: 1 },
-		px: 23,
-		py: 0
-	}, {
-		note: {
-			// title: "Tk annotation goes here I think",
 			label: "1/2 of female-authored Horror/Paranormal fiction in the 2010s is also Romance",
 			wrap: 180,
 		},
 		data: { genre: 'Horror/Paranormal', decade: 2010, percent: 0.35 },
-		px: 18,
-		py: -2
+		px: 15,
+		py: 5
 	}, {
 		note: {
 			// title: "Tk annotation goes here I think",
@@ -60,6 +51,15 @@
 		data: { genreFrom: 'Historical', genreTo: 'Domestic', decadeFrom: 1950, decadeTo: 2010, percent: -0.7, dir: -1 },
 		px: -2,
 		py: -3
+	}, {
+		note: {
+			// title: "Tk annotation goes here I think",
+			label: "Most best-selling books are in this category, and it closely matches the overall gender ratio",
+			wrap: 120,
+		},
+		data: { genreFrom: 'Literary/None', genreTo: 'Literary/None', decadeFrom: 1950, decadeTo: 2010, percent: -0.73, dir: -1 },
+		px: -2,
+		py: -3,
 	}]
 
 

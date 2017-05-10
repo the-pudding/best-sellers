@@ -335,6 +335,7 @@ main {
   stroke-opacity: 0.6;
   stroke-width: 1px;
   stroke-dasharray: 4px 4px;
+  pointer-events: none;
 }
 
 .legend-container.is-hidden {

@@ -4,6 +4,7 @@
 	var colors = ['#0C4B4A','#1D5560','#3A5C74','#5B6283','#7F658B','#A3678C','#C26B86','#DB717A','#EC7E6B']
 	var breakpoint = 700;
 	var mobile = false;
+	var mobileAnnotation = false;
 	var addToOther = ['Historical', 'Domestic'];
 	var genreColumns = null;
 	var genreData = null;
@@ -185,7 +186,7 @@
 		g.append('g')
 			.attr('class', 'annotations-2')
 
-		var years = ["1990","2001"]
+		var years = ["1990","2000"]
 
 		g.select('.annotations-2')
 			.selectAll('.line-nineties')
@@ -193,6 +194,25 @@
 			.enter()
 			.append("line")
 			.attr("class",'line-nineties')
+
+		var noteContent = g.select('.annotations-2')
+			.append('g')
+				.attr('class', 'annotation')
+			.append('g')
+				.attr('class', "annotation-note")
+			.append('g')
+				.attr('class', "annotation-note-content")
+
+		noteContent.append('text')
+			.attr('class', "annotation-note-label")
+			.attr('dx', 0)
+			.attr('y', 17.6)
+			.html('<tspan x="0" dy="0.8em">Gender ratio</tspan><tspan x="0" dy="1.2em">approaches</tspan><tspan x="0" dy="1.2em">parity</tspan>')
+
+		noteContent.append('text')
+			.attr('class', "annotation-note-title")
+			.html('<tspan x="0" dy="0.8em">1990s</tspan></text>')
+			
 
 	}
 
@@ -259,10 +279,17 @@
 
 	function drawNineties() {
 		svg.selectAll(".line-nineties")
-			.attr("x1",function(d) { console.log(d); return scales[state].x(d3.timeParse("%Y")(d)) })
+			.attr("x1",function(d) { return scales[state].x(d3.timeParse("%Y")(d)) })
 			.attr("y1",scales[state].y(0))
 			.attr("x2",function(d) { return scales[state].x(d3.timeParse("%Y")(d)) })
 			.attr("y2", scales[state].y(1))
+
+		svg.select('.annotations-2 .annotation')
+			.attr('transform', function() {
+				var x = scales[state].x(d3.timeParse("%Y")('1991'))
+				var y = scales[state].y(0.85)
+				return 'translate(' + x + ',' + y + ')';
+			})
 
 	}
 
@@ -367,7 +394,10 @@
 
 		svg.select('.annotations-1')
 			.call(makeAnnotations)
-			.classed('is-hidden', mobile)
+			.classed('is-hidden', mobileAnnotation)
+
+		svg.select('.annotations-2')
+			.classed('is-hidden', mobileAnnotation)
 	}
 
 	function formatPercent(num) {
@@ -479,6 +509,7 @@
 
 	function resize() {
 		mobile = d3.select('body').node().offsetWidth < breakpoint
+		mobileAnnotation = d3.select('body').node().offsetWidth < 800
 		updateChart()
 	}
 
