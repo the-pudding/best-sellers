@@ -103,6 +103,10 @@ main {
   position: relative;
 }
 
+.chart path {
+  shape-rendering: crispEdges;
+}
+
 .chart text {
   fill: #555;
   font-family: 'Atlas Grotesk Web', Arial, sans-serif;
