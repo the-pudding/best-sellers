@@ -35,17 +35,6 @@
 		py: -9
 	}]
 
-	var annotations2 = [{
-		note: {
-			title: "1990s",
-			label: "Gender ratio approaches 50/50",
-			wrap: 150,
-		},
-		data: { genre: 'Literary/None', dateFrom: d3.timeParse('%Y')('1990'), dateTo: d3.timeParse('%Y')('2000'), percent: 0.5 },
-		px: -3,
-		py: -9
-	}]
-
 	var state = 'percent'
 	var labels = {'count':'Number of books', 'percent':'Percent of books', 'genrePercent':'Percent of genre books'}
 
@@ -195,6 +184,16 @@
 
 		g.append('g')
 			.attr('class', 'annotations-2')
+
+		var years = ["1990","2001"]
+
+		g.select('.annotations-2')
+			.selectAll('.line-nineties')
+			.data(years)
+			.enter()
+			.append("line")
+			.attr("class",'line-nineties')
+
 	}
 
 	// SET UP GENRE
@@ -229,7 +228,7 @@
 			.call(axisY)
 	}
 
-	function drawLegend(width,height) {
+	function drawLegend() {
 		svg.select(".legend-container")
 			.attr("visibility","visible")
 		  .attr("width",margin.right)
@@ -250,12 +249,21 @@
 		    .call(legendOrdinal);
 	}
 
-	function drawLabels(height) {
+	function drawLabels() {
 		var label = svg.select('.label--y')
 			.text(labels[state])
 			.transition()
 			.duration(transitionDuration)
 			.attr("transform", "translate("+ (margin.left/4) +","+(height/2)+")rotate(-90)")
+	}
+
+	function drawNineties() {
+		svg.selectAll(".line-nineties")
+			.attr("x1",function(d) { console.log(d); return scales[state].x(d3.timeParse("%Y")(d)) })
+			.attr("y1",scales[state].y(0))
+			.attr("x2",function(d) { return scales[state].x(d3.timeParse("%Y")(d)) })
+			.attr("y2", scales[state].y(1))
+
 	}
 
 	function updateChart() {
@@ -329,9 +337,11 @@
 	      		return scales.color(key);
 	      	})
 
-	    drawLabels(height)
+	    drawLabels()
 
-	    drawLegend(width, height)
+	    drawLegend()
+
+	    drawNineties()
 
 	    var type = d3.annotationCallout
 

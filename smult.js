@@ -16,21 +16,21 @@
 	var annotations = [{
 		note: {
 			// title: "Tk annotation goes here I think",
-			label: "Most books are in this category, and it closely matches the overall gender ratio",
+			label: "Most best-selling books are in this category, and it closely matches the overall gender ratio",
 			wrap: 180,
 		},
 		data: { genre: 'Literary/None', decade: 1940, percent: 0, dir: 1 },
-		px: 15,
-		py: -3
+		px: 23,
+		py: 0
 	}, {
 		note: {
 			// title: "Tk annotation goes here I think",
-			label: "Since 195x, the majority of female-authored Horror/Paranormal books fall into the category of Paranormal Romance",
+			label: "1/2 of female-authored Horror/Paranormal fiction in the 2010s is also Romance",
 			wrap: 180,
 		},
-		data: { genre: 'Horror/Paranormal', decade: 2000, percent: 0.56 },
-		px: 3,
-		py: -3
+		data: { genre: 'Horror/Paranormal', decade: 2010, percent: 0.35 },
+		px: 18,
+		py: -2
 	}, {
 		note: {
 			// title: "Tk annotation goes here I think",
@@ -48,7 +48,7 @@
 			label: "Consistently male-dominated genres",
 			wrap: 120,
 		},
-		data: { genreFrom: 'Spy/Politics', genreTo: 'Fantasy/Scifi', decadeFrom: 1950, decadeTo: 2010, percent: 0.3, dir: 1 },
+		data: { genreFrom: 'Spy/Politics', genreTo: 'Suspense', decadeFrom: 1950, decadeTo: 2010, percent: 0.3, dir: 1 },
 		px: 3,
 		py: 3
 	},  {
@@ -67,6 +67,25 @@
 		return d3.format('.0%')(num);
 	}
 
+ 	function cleanRowNew(row) {
+ 		var percentW = +row.women_count/row.total_count;
+ 		var percentM = 1 - percentW;
+ 		var countW = +row.women_count;
+ 		var countTotal = row.total_count;
+ 		var countM = row.total_count - row.women_count;
+		
+		var out = {
+			percentW: percentW,
+	 		percentM: percentM,
+	 		countW: countW,
+	 		countTotal: countTotal,
+	 		countM: countM,
+			decade: +row.decade,
+			genre: row.genre,
+		}
+
+		return out;
+ 	}
 	// CLEANING FNS
  	function cleanRow(row) {
  		var percentW = +row.percent;
@@ -114,7 +133,7 @@
 	// LOAD THE DATA
 	function loadData(cb) {
 
-		d3.tsv('assets/smult_data_2.tsv', cleanRow, function(err, data) {
+		d3.tsv('assets/smult_data.tsv', cleanRowNew, function(err, data) {
 
 			var filtered = data.filter(function(d) { return d.countTotal > 10 })
 

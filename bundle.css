@@ -329,6 +329,14 @@ main {
   fill-opacity: 1;
 }
 
+.chart__genre .line-nineties {
+  fill: none;
+  stroke: #fff;
+  stroke-opacity: 0.6;
+  stroke-width: 1px;
+  stroke-dasharray: 4px 4px;
+}
+
 .legend-container.is-hidden {
   display: none;
 }
