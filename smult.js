@@ -16,12 +16,12 @@
 	var annotations = [{
 		note: {
 			// title: "Tk annotation goes here I think",
-			label: "1/2 of female-authored Horror/Paranormal fiction in the 2010s is also Romance",
+			label: "1/4 of female-authored Horror/Paranormal fiction in the 2010s is also Romance",
 			wrap: 180,
 		},
-		data: { genre: 'Horror/Paranormal', decade: 2010, percent: 0.35 },
+		data: { genre: 'Horror/Paranormal', decade: 2010, percent: 0.45 },
 		px: 15,
-		py: 5
+		py: 3
 	}, {
 		note: {
 			// title: "Tk annotation goes here I think",
@@ -133,7 +133,7 @@
 	// LOAD THE DATA
 	function loadData(cb) {
 
-		d3.tsv('assets/smult_data.tsv', cleanRowNew, function(err, data) {
+		d3.tsv('assets/smult_data_2.tsv', cleanRowNew, function(err, data) {
 
 			var filtered = data.filter(function(d) { return d.countTotal > 10 })
 
