@@ -19,9 +19,9 @@
 			label: "1/4 of female-authored Horror/Paranormal fiction in the 2010s is also Romance",
 			wrap: 180,
 		},
-		data: { genre: 'Horror/Paranormal', decade: 2010, percent: 0.45 },
+		data: { genre: 'Horror/Paranormal', decade: 2010, percent: 0.52 },
 		px: 15,
-		py: 3
+		py: -2
 	}, {
 		note: {
 			// title: "Tk annotation goes here I think",
@@ -347,6 +347,7 @@
 		  })
 		  .annotations(annotations)
 
+		console.log("annotations-1",mobile)
 		svg.select('.annotations-1')
 			.call(makeAnnotations)
 			.classed('is-hidden', mobile)
