@@ -7,14 +7,13 @@
 	var scales = {}
 	var chartWidth = 0
 	var chartHeight = 0
-	var margin = { top:10, bottom:25, left: 50, right: 15 }
+	var margin = { top:25, bottom:25, left: 50, right: 15 }
 	var ratio = 3.5
 	var stack = d3.stack()
 	stack.keys(["percent_women","percent_men"])
 	var stackedData = null
 
 	var mf_colors = ['#0C4B4A', '#EC7E6B']
-
 
 	function cleanRow(row) {
 		return {
@@ -34,37 +33,59 @@
 	}
 
 	function setupElements() {
-		var gLine = svg.select('.container__line');
+		var gDegrees = svg.select('.container__line');
 
-		gLine.append('g')
-		.attr('class', 'line-g')
-		.append('path')
-		.attr('class', 'line')
-		.datum(mfaData)
+		gDegrees.append('g')
+		.attr('class', 'degrees-g')
+		.selectAll('.bar')
+		.data(mfaData)
+		.enter()
+		.append('rect')
+		.attr('class','bar')
 
-		gLine.append('g').attr('class', 'axis axis--x axis--x--line');
+		gDegrees.append('g').attr('class', 'axis axis--x axis--x--line');
 
-		gLine.append('g').attr('class', 'axis axis--y axis--y--line');
+		gDegrees.append('g').attr('class', 'axis axis--y axis--y--line');
 
- 
-		var gArea = svg.select('.container__area')
+		gDegrees.append('text').attr('class','title').text('Degrees Earned (US)')
 
-		gArea.append('g')
-			.attr('class', 'area-g')
-			.selectAll('.area')
+		var gGenders = svg.select('.container__area')
+
+		var stacks = gGenders.selectAll('g')
 			.data(stackedData)
 			.enter()
-			.append('path')
-			.attr('class','area');
+			.append('g')
+			.attr('class', 'stack')
+			.attr("fill", function(d) { 
+	      		return scales.color(d.key);
+	      	})
+			.selectAll('.bar')
+			.data(function(d){ 
+				console.log(d) 
+				return d 
+			})
+			.enter()
+			.append('rect')
+			.attr('class', 'bar')
 
-		gArea.append('g').attr('class', 'axis axis--x axis--x--area');
+		gGenders.append('g').attr('class', 'axis axis--x axis--x--area');
 
-		gArea.append('g').attr('class', 'axis axis--y axis--y--area');
+		gGenders.append('g').attr('class', 'axis axis--y axis--y--area');
+		gGenders.append('text').attr('class','title').text('Gender Ratio of Degree-Earners')
+
+		svg.append("text")
+			.attr("class","label--y--line")
+			.attr("text-anchor","middle")
+
+		svg.append("text")
+			.attr("class","label--y--area")
+			.attr("text-anchor","middle")
+
 
 	}
 
 	function setupScales() {
-		scales.x = d3.scaleTime().domain(d3.extent(mfaData, function(d) { return d.year }))
+		scales.x = d3.scaleTime().domain([d3.timeParse("%Y")(1988),d3.timeParse("%Y")(2014)])
 		scales.yLine = d3.scaleLinear().domain([0,d3.max(mfaData, function(d){return d.total})])
 		scales.yArea = d3.scaleLinear().domain([0,1])
 		scales.color = d3.scaleOrdinal()
@@ -85,6 +106,12 @@
 		scales.yArea.range([chartHeight,0]);
 	}
 
+	function getBandwidth() {
+		var dom = scales.x
+      	r = dom(d3.timeParse("%Y")("2014")) - dom(d3.timeParse("%Y")("1988"));
+    	return Math.abs(r/(2013-1988)-2);
+  	}
+
 	function drawAxes() {
 		console.log("updateAxes")
 		var xTickCount = mobile ? 3 : 5
@@ -101,7 +128,6 @@
 			.ticks(yTickCount)
 			.tickSizeInner(-chartWidth)
 
-
 		svg.select(".axis--y--line")
 			.call(axisYLine)
 
@@ -109,13 +135,23 @@
 			.attr("transform", "translate(0," + chartHeight + ")")
 			.call(axisX)
 
+		console.log(yTickCount)
 		var axisYArea = d3.axisLeft(scales.yArea)
-			.ticks(yTickCount)
+			.ticks(yTickCount,"%")
 			.tickSizeInner(-chartWidth)
 
 		svg.select(".axis--y--area")
 			.call(axisYArea)
 
+
+		svg.selectAll(".title")
+			.attr("transform", "translate("+ -5 +"," + -10 + ")")
+	}
+
+	function drawLabels() {
+		svg.select('.label--y--line')
+			.text("CW MFAs")
+			.attr("transform", "translate("+ (margin.left/5) +","+(chartHeight/2+margin.top)+")rotate(-90)")
 	}
 
 
@@ -146,38 +182,31 @@
 
 		updateScales()
 		drawAxes()
-
-		var lineFn = d3.area()
-		    .x(function(d) { return scales.x(d.year); })
-		    .y0(function(d) { return scales.yLine(0) })
-    		.y1(function(d) { return scales.yLine(d.total); });
     	
-    	var line = gLine.select('.line')
-    		.attr('d',lineFn)
-    		.attr('stroke','#5B6283')
+    	gLine.selectAll('.bar')
+    		.attr('x', function(d) { return scales.x(d.year) })
+    		.attr('y', function(d) {
+    			return scales.yLine(d.total)
+    		})
+    		.attr('height', function(d) {
+    			return chartHeight - scales.yLine(d.total)
+    		})
+    		.attr('width', getBandwidth())
     		.attr('fill','#7F658B')
-    		.attr('opacity','.9')
 
-    	var areaFn = d3.area()
-		    .x(function(d, i) { return scales.x(d.data.year); })
-		    .y0(function(d) { return scales.yArea(d[0]); })
-		    .y1(function(d) { return scales.yArea(d[1]); })
-		    .curve(d3.curveMonotoneX);
-
-    	var area = gArea.selectAll('.area')
-       		.attr('d', areaFn)
-    		.attr("fill", function(d) { 
-	      		return scales.color(d.key);
-	      	})
-	      	.attr('opacity', '.9')
+    	gArea.selectAll('.bar')
+       		.attr('x', function(d){ return scales.x(d.data.year)})
+       		.attr('y', function(d){ return scales.yArea(d[1])})
+       		.attr('height', function(d) {return scales.yArea(d[0]) - scales.yArea(d[1])} )
+	      	.attr('width', getBandwidth())
 	}
 
 
 	function init() {
 		loadData(function() {
 			console.log("inside callback")
-			setupElements()
 			setupScales()
+			setupElements()
 			console.log(scales)
 			resize() // draw chart
 //			setupEvents()

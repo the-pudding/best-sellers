@@ -284,8 +284,22 @@ main {
   stroke-opacity: 0.2;
 }
 
+.chart__mfa .title {
+  font-size: 12px;
+  font-weight: bold;
+}
+
 .chart__mfa .axis path {
   display: none;
+}
+
+.chart__mfa rect {
+  fill-opacity: .8;
+}
+
+
+.chart__mfa text {
+  font-size: 12px;
 }
 
 .chart__mfa .axis--y line {
