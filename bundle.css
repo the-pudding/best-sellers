@@ -284,6 +284,19 @@ main {
   stroke-opacity: 0.2;
 }
 
+.chart__mfa .axis path {
+  display: none;
+}
+
+.chart__mfa .axis--y line {
+    stroke-dasharray: 4px 4px;
+    stroke-opacity: 0.2;
+}
+
+.chart__mfa .axis--y .tick:nth-child(2) {
+  display: none;
+}
+
 .chart__gender .axis--y line {
     stroke-dasharray: 4px 4px;
     stroke-opacity: 0.2;

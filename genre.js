@@ -180,6 +180,7 @@
 			})
 			.text(function(d) { return d; })
 
+
 		g.append('g')
 			.attr('class', 'annotations-1')
 
@@ -263,7 +264,26 @@
 	        	return d.label !== "e" 
 	        })
 	        .scale(scales.color)
-	        .ascending(true);
+	        .ascending(true)
+	        .on("cellover",function(d){ 
+	        	key = d+"_percent"
+	        	chart.selectAll('.area')
+       				.classed('is-active', function(d) {
+       				return d.key === key;
+       			})
+		   		chart.selectAll('.area')
+       				.classed('is-inactive', function(d) {
+       				return d.key !== key;
+       			})
+	        })
+	        .on("cellout",function(d){ 
+	        	key = d+"_percent"
+		      	chart.selectAll('.area')
+		       		.classed('is-active', false);
+
+		   		chart.selectAll('.area')
+		       		.classed('is-inactive', false);
+	         })
 
 		svg.select(".legendOrdinal")
 		    .call(legendOrdinal);
@@ -464,6 +484,7 @@
        	chart.select(".vertical")
        		.style('visibility', 'visible')
 
+       	console.log(key)
        	chart.selectAll('.area')
        		.classed('is-active', function(d) {
        			return d.key === key;
