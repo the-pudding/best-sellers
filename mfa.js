@@ -3,12 +3,13 @@
 	var mfaData = null
 	var mobile = false
 	var chartDiv = d3.select('.chart__mfa')
-	var svg = chartDiv.select('svg')
+	var svgDegrees = chartDiv.select('.container__line')
+	var svgGenders = chartDiv.select('.container__area')
 	var scales = {}
 	var chartWidth = 0
 	var chartHeight = 0
-	var margin = { top:25, bottom:25, left: 50, right: 15 }
-	var ratio = 3.5
+	var margin = { top:25, bottom:25, left: 40, right: 20 }
+	var ratio = 3.50
 	var stack = d3.stack()
 	stack.keys(["percent_women","percent_men"])
 	var stackedData = null
@@ -33,11 +34,10 @@
 	}
 
 	function setupElements() {
-		var gDegrees = svg.select('.container__line');
-
-		gDegrees.append('g')
+		var gDegrees = svgDegrees.append('g')
 		.attr('class', 'degrees-g')
-		.selectAll('.bar')
+
+		gDegrees.selectAll('.bar')
 		.data(mfaData)
 		.enter()
 		.append('rect')
@@ -47,9 +47,10 @@
 
 		gDegrees.append('g').attr('class', 'axis axis--y axis--y--line');
 
-		gDegrees.append('text').attr('class','title').text('Degrees Earned (US)')
+		gDegrees.append('text').attr('class','title').text('CW MFA Degrees Earned (US)')
 
-		var gGenders = svg.select('.container__area')
+		var gGenders = svgGenders.append('g')
+			.attr('class', 'genders-g')
 
 		var stacks = gGenders.selectAll('g')
 			.data(stackedData)
@@ -71,15 +72,26 @@
 		gGenders.append('g').attr('class', 'axis axis--x axis--x--area');
 
 		gGenders.append('g').attr('class', 'axis axis--y axis--y--area');
-		gGenders.append('text').attr('class','title').text('Gender Ratio of Degree-Earners')
+		gGenders.append('text').attr('class','title').text('Gender Ratio of CW MFA-Earners')
 
-		svg.append("text")
+		gDegrees.append("text")
 			.attr("class","label--y--line")
 			.attr("text-anchor","middle")
 
-		svg.append("text")
+		gGenders.append("text")
 			.attr("class","label--y--area")
 			.attr("text-anchor","middle")
+
+		gGenders.append("text")
+			.attr("class", "label label--men")
+			.attr("text-anchor","middle")
+			.text("Men")
+
+		gGenders.append("text")
+			.attr("class", "label label--women")
+			.attr("text-anchor","middle")
+			.text("Women")
+
 
 
 	}
@@ -115,12 +127,12 @@
 	function drawAxes() {
 		console.log("updateAxes")
 		var xTickCount = mobile ? 3 : 5
-		var yTickCount = mobile ? 2 : 4
+		var yTickCount = mobile ? 3 : 5
 
 		var axisX = d3.axisBottom(scales.x)
 		.ticks(xTickCount)
 
-		svg.select(".axis--x--line")
+		svgDegrees.select(".axis--x--line")
 			.attr("transform", "translate(0," + chartHeight + ")")
 			.call(axisX)
 
@@ -128,10 +140,10 @@
 			.ticks(yTickCount)
 			.tickSizeInner(-chartWidth)
 
-		svg.select(".axis--y--line")
+		svgDegrees.select(".axis--y--line")
 			.call(axisYLine)
 
-		svg.select(".axis--x--area")
+		svgGenders.select(".axis--x--area")
 			.attr("transform", "translate(0," + chartHeight + ")")
 			.call(axisX)
 
@@ -140,49 +152,67 @@
 			.ticks(yTickCount,"%")
 			.tickSizeInner(-chartWidth)
 
-		svg.select(".axis--y--area")
+		svgGenders.select(".axis--y--area")
 			.call(axisYArea)
 
 
-		svg.selectAll(".title")
+		svgDegrees.select(".title")
+			.attr("transform", "translate("+ -5 +"," + -10 + ")")
+		svgGenders.select(".title")
 			.attr("transform", "translate("+ -5 +"," + -10 + ")")
 	}
 
 	function drawLabels() {
-		svg.select('.label--y--line')
-			.text("CW MFAs")
-			.attr("transform", "translate("+ (margin.left/5) +","+(chartHeight/2+margin.top)+")rotate(-90)")
+		svgGenders.select(".label--men")
+			.attr('x',scales.x(d3.timeParse('%Y')(1992)))
+			.attr('y',scales.yArea('.8'))
+			.style('fill',scales.color('percent_men'))
+		svgGenders.select(".label--women")
+			.attr('x',scales.x(d3.timeParse('%Y')(1992)))
+			.attr('y',scales.yArea('.3'))
+			.style('fill',scales.color('percent_women'))
+
 	}
+
 
 
 	function updateChart() {
 		console.log("updateChart")
-		var svgWidth = chartDiv.node().offsetWidth
-		var svgHeight =  Math.floor(svgWidth / ratio)
+		var divWidth = chartDiv.node().offsetWidth
+		var divHeight =  Math.floor(divWidth / ratio)
 
-		chartWidth = (svgWidth/2) - margin.left - margin.right
+		svgWidth = mobile?divWidth:(divWidth/2)
+		svgHeight = mobile?(2*divHeight):divHeight
+
+		chartWidth = svgWidth - margin.left - margin.right
 		chartHeight = svgHeight - margin.top - margin.bottom
 
-		svg.attr('width',svgWidth)
-			.attr('height',svgHeight)
+		console.log("svgHeight",svgHeight)
+		console.log("chartHeight",chartHeight)
 
 		var translateLine = "translate(" + margin.left + "," + margin.top +")"
-		var gLine = svg.select('.container__line')
+		gLine = svgDegrees.select('.degrees-g')
+
+		svgDegrees.attr('width',svgWidth)
+			.attr('height',svgHeight)
+
+		svgGenders.attr('width',chartWidth)
+			.attr('height',svgHeight)
 
 		gLine.attr('transform',translateLine)
-			.attr('width',chartWidth)
-			.attr('height',chartHeight)
 
-		var translateArea = "translate(" + (chartWidth + 2*margin.left + margin.right) + "," + margin.top +")"
-		var gArea = svg.select('.container__area')
+
+		var translateArea = "translate(" + margin.left + "," + margin.top +")"
+		
+		var gArea = svgGenders.select('.genders-g')
 
 		gArea.attr('transform',translateArea)
-			.attr('width',chartWidth)
-			.attr('height',chartHeight)
+			
 
 		updateScales()
 		drawAxes()
-    	
+    	drawLabels()
+
     	gLine.selectAll('.bar')
     		.attr('x', function(d) { return scales.x(d.year) })
     		.attr('y', function(d) {

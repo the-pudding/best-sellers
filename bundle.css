@@ -284,6 +284,11 @@ main {
   stroke-opacity: 0.2;
 }
 
+.chart__mfa .label {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
 .chart__mfa .title {
   font-size: 12px;
   font-weight: bold;
