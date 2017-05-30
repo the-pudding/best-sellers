@@ -1,11 +1,12 @@
 body {
   background-color: #fff;
   color: #2a2a2a;
+  font-size: 16px;
 }
 
 p {
-  font-size: 17px;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.8;
 }
 a {
   text-decoration: none;
@@ -58,8 +59,8 @@ blockquote p {
   margin-bottom: 1rem;
 }
 .intro__dek {
-  font-size: 1.1rem;
-  max-width: 25rem;
+  font-size: 1rem;
+  max-width: 30rem;
   margin: 0 auto;
 }
 /* STORY */
@@ -430,6 +431,7 @@ main {
 .notice li {
   list-style-type: circle;
   margin-left: 1rem;
+  font-size: 1rem;
 }
 
 p.no-margin {
