@@ -1,6 +1,6 @@
 Rank	Decade	VIAF	Count	Name	Gender	Primary Genre
 1	2010	56608054	28	Clive Cussler	Male	Adventure
-2	2010	22272314	26	James Patterson	Male	suspense
+2	2010	22272314	26	James Patterson	Male	Suspense
 3	2010	108957653	24	Stuart Woods	Male	Suspense
 4	2010	100238676	22	Danielle Steel	Female	Romance
 5	2010	102339955	16	David Baldacci	Male	Spy/Politics
@@ -23,7 +23,7 @@ Rank	Decade	VIAF	Count	Name	Gender	Primary Genre
 2	1990	97113511	13	Stephen King	Male	Horror
 3	1990	101763416	12	Robert B. Parker	Male	Mystery
 3	1990	110880758	12	Dean Koontz	Male	Horror
-3	1990	305233686	12	W. E. B. Griffin	Male	Other
+3	1990	305233686	12	W. E. B. Griffin	Male	Other (War)
 6	1990	100252785	11	Mary Higgins Clark	Female	Mystery
 6	1990	24601518	11	Dick Francis	Male	Mystery
 8	1990	101947685	10	Lilian Jackson Braun	Female	Mystery
@@ -44,23 +44,23 @@ Rank	Decade	VIAF	Count	Name	Gender	Primary Genre
 1	1970	109175102	7	Alistair MacLean	Male	Mystery
 3	1970	90712179	6	John Updike	Male	Domestic
 3	1970	109373898	6	Robert Ludlum	Male	Spy/Politics
-5	1970	17220157	5	Taylor Caldwell	Female	Other
+5	1970	17220157	5	Taylor Caldwell	Female	Other (Historical)
 5	1970	31590256	5	Morris West	Male	Spy/Politics
 5	1970	32002877	5	Irwin Shaw	Male	Adventure
 5	1970	71388952	5	Agatha Christie	Female	Mystery
 5	1970	109254932	5	John le Carre	Male	Spy/Politics
 1	1960	12429524	11	John O'Hara	Male	
 2	1960	66468765	8	Victoria Holt	Female	Romance
-3	1960	17220157	7	Taylor Caldwell	Female	Other
+3	1960	17220157	7	Taylor Caldwell	Female	Other (Historical)
 3	1960	109175102	7	Alistair MacLean	Male	Mystery
-3	1960	87919936	7	Louis Auchincloss	Male	Other
+3	1960	87919936	7	Louis Auchincloss	Male	
 5	1960	109491991	6	Mary Stewart	Female	Romance
-5	1960	49232921	6	Irving Wallace	Male	Other
+5	1960	49232921	6	Irving Wallace	Male	Other (Historical)
 6	1960	31590256	5	Morris West	Male	Spy/Politics
 1	1950	103152570	10	Frank G. Slaughter	Male	
 2	1950	111981061	9	Frank Yerby	Male	
 3	1950	7510005	8	Nevil Shute	Male	Adventure
-4	1950	17220157	7	Taylor Caldwell	Female	Other (Religious)
+4	1950	17220157	7	Taylor Caldwell	Female	Other (Historical)
 4	1950	57912804	7	F. Van Wyck Mason	Male	Mystery
 6	1950	44300783	6	Frances Parkinson Keyes	Female	
 6	1950	91868694	6	Pearl S. Buck	Female	

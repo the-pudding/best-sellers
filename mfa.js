@@ -92,6 +92,10 @@
 			.attr("text-anchor","middle")
 			.text("Women")
 
+		gDegrees.append("text")
+			.attr("class", "label label--no-data")
+			.attr("text-anchor","middle")
+			.text("No data")
 
 
 	}
@@ -155,7 +159,6 @@
 		svgGenders.select(".axis--y--area")
 			.call(axisYArea)
 
-
 		svgDegrees.select(".title")
 			.attr("transform", "translate("+ -5 +"," + -10 + ")")
 		svgGenders.select(".title")
@@ -163,6 +166,11 @@
 	}
 
 	function drawLabels() {
+		svgDegrees.select(".label--no-data")
+			.attr('x',scales.x(d3.timeParse('%Y')(1992)))
+			.attr('y',scales.yLine('200'))
+			.style('fill',"#CFCFCF")
+
 		svgGenders.select(".label--men")
 			.attr('x',scales.x(d3.timeParse('%Y')(1992)))
 			.attr('y',scales.yArea('.8'))
@@ -196,7 +204,7 @@
 		svgDegrees.attr('width',svgWidth)
 			.attr('height',svgHeight)
 
-		svgGenders.attr('width',chartWidth)
+		svgGenders.attr('width',svgWidth)
 			.attr('height',svgHeight)
 
 		gLine.attr('transform',translateLine)
