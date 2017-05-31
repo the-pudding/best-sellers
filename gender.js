@@ -6,7 +6,7 @@
 	var colorF = colors[0]
 	var colorM = colors[8]
 	var colors = [colorF, colorM]
-	var mobile = false;	
+	var mobile = false;
 	var genderData = null;
 	var scales = {};
 	var stack = d3.stack();
@@ -20,7 +20,7 @@
 
 	var state = 'percent';
 	var labels = {'count':'Number of books', 'percent':'Percent of books'}
-	
+
 	var chart = d3.select('.chart__gender');
 	var svg = chart.select('svg');
 
@@ -52,7 +52,7 @@
 			cb()
 		});
 	}
-	
+
 	//SETUP
 	//GENDER HELPERS
 	function setupScales() {
@@ -76,7 +76,7 @@
 		scales.color = d3.scaleOrdinal()
 			.domain(['male_count', 'female_count'])
 			.range(colors);
-		
+
 	}
 
 	function setupElements() {
@@ -128,7 +128,7 @@
 			.attr('class', 'interaction')
 
 	}
-	
+
 	//UPDATE
 	function updateScales(width, height){
 		scales.count.x.range([0, width]);
@@ -168,7 +168,7 @@
 
 		var d0 = genderData[index - 1];
 		var d1 = genderData[index];
-		
+
 		var d = invertedX - d0.date > d1.date - invertedX ? d1 : d0;
 
 		return d
@@ -213,7 +213,7 @@
 	    var mouseY = mouse[1]
 
 	    var d = xToData(mouseX)
-		
+
 		chart.select(".vertical")
 			.attr("x",(scales[state].x(d.date)));
 
@@ -222,19 +222,19 @@
 		var displayM = state === 'percent' ? formatPercent(valM) : valM;
 		var displayF = state === 'percent' ? formatPercent(valF) : valF;
 		var displayYear = +d3.timeFormat("%Y")(d.date);
-		
+
 		chart.select(".tooltip--year").text(displayYear);
 		chart.select(".tooltip--male span").text(displayM);
 		chart.select(".tooltip--female span").text(displayF);
-		
+
        	var bbox = chart.select('.tooltip').node().getBoundingClientRect()
 
        	var isLeft = mouseX < width / 2;
        	var isTop = mouseY < height / 2;
        	var xOff = scales[state].x(d.date);
-       	var topOff = isTop ? 0 : -1; 
+       	var topOff = isTop ? 0 : -1;
        	var yOff = mouseY + (topOff * bbox.height);
-		
+
        	chart.select('.tooltip')
        		.style('visibility', 'visible')
        		.style("right", isLeft ? 'auto' : width - xOff + margin.right + 'px')
@@ -256,10 +256,10 @@
 	function updateChart() {
 		var w = chart.node().offsetWidth;
 		var h = Math.floor(w / ratio);
-		
+
 		width = w - margin.left - margin.right;
 		height = h - margin.top - margin.bottom;
-		
+
 		svg
 			.attr('width', w)
 			.attr('height', h);
@@ -267,7 +267,7 @@
 		var translate = "translate(" + margin.left + "," + margin.top + ")";
 
 		var g = svg.select('.container')
-		
+
 		g.attr("transform", translate)
 
 		updateScales(width, height)
@@ -288,7 +288,7 @@
 			.data(stackedData)
 
 		layer.exit().remove()
-		
+
 		var enterLayer = layer.enter()
 			.append('path')
 			.attr('class', 'area')
@@ -304,7 +304,7 @@
 	    	.transition()
 	    	.duration(transitionDuration)
 	    	.attr('d', area)
-	      	.style("fill", function(d) { 
+	      	.style("fill", function(d) {
 	      		var key = d.key.split('_')[0]
 	      		return scales.color(key);
 	      	})
@@ -349,7 +349,20 @@
 
 	function setupEvents() {
 		chart.selectAll('.toggle__button').on('click', handleToggle)
-		
+		chart.selectAll('.toggle__button')
+			.classed("front-curve",function(d,i){
+				if(i==0){
+					return true;
+				}
+				return false;
+			})
+			.classed("back-curve",function(d,i){
+				if(i==1){
+					return true;
+				}
+				return false;
+			})
+
 		chart.selectAll('.interaction')
 			.on('mousemove',handleMouseMove)
 			.on('mouseout', handleMouseOut)

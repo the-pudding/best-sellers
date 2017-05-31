@@ -7,11 +7,12 @@ body {
 p {
   font-size: 1rem;
   line-height: 1.8;
+  color: black;
 }
 a {
   text-decoration: none;
-  border-bottom: 2px solid #EC7E6B;
-  color: #2a2a2a;
+  border-bottom: 1px solid #EC7E6B;
+  color: black;
 }
 a:visited,
 a:hover {
@@ -37,6 +38,8 @@ blockquote p {
 .story__text .exchange {
   /*background-color: #EC7E6B;*/
   /*border-radius: 3px;*/
+  margin-top: 4rem;
+  margin-bottom: 4rem;
 }
 .story__text .exchange p {
   text-align: center;
@@ -45,13 +48,15 @@ blockquote p {
 }
 .intro {
   margin: 5rem auto;
+  margin-bottom: 3rem;
 }
 .intro__hed {
   max-width: 55rem;
   margin: 0 auto;
-  font-size: 2rem;
-  margin-bottom: 4rem;
+  font-size: 4rem;
+  margin-bottom: 6rem;
   text-align: center;
+  margin-top: 9rem;
 }
 .intro__byline {
   font-size: 0.85rem;
@@ -60,8 +65,9 @@ blockquote p {
 }
 .intro__dek {
   font-size: 1rem;
-  max-width: 30rem;
+  max-width: 40rem;
   margin: 0 auto;
+  margin-top: 4rem;
 }
 /* STORY */
 main {
@@ -71,6 +77,15 @@ main {
 .subhed {
   margin-top: 5rem;
   font-weight: bold;
+  margin: 0 auto;
+  padding: 1rem;
+  font-size: 1.3rem;
+  font-family: 'Atlas Grotesk Web';
+  font-weight: 500;
+  max-width: 40rem;
+  color: rgba(0,0,0,.9);
+  padding: 0px;
+  margin-top: 5rem;
 }
 
 .story__text {
@@ -83,26 +98,39 @@ main {
 }
 
 .btn {
-  border-radius: 3px;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   line-height: 1;
-  width: 5rem;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   background-color: #ddd;
   border: 2px solid #aaa;
   opacity: 0.75;
+   */
+  border-top-left-radius:;
+  font-size: .75rem;
+  color: black;
+  background-color: white;
+  border: 1px solid rgba(127, 125, 156, 0.54);
+  cursor: pointer;
+  cursor: hand;
+  margin-left: -1px;
 }
 
 .btn.is-active {
   background-color: #888;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 5px inset;
+  border-color: rgba(14, 14, 14, 0.24);
+  background-color: rgba(243, 243, 243, 0.69);
+  cursor: pointer;
+  cursor: hand;
 }
 
 .chart {
   max-width: 60rem;
   margin: 0 auto;
   position: relative;
+  margin-bottom: 4rem;
 }
 
 .chart path {
@@ -110,19 +138,26 @@ main {
 }
 
 .chart text {
-  fill: #555;
+  fill: #040404;
   font-family: 'Atlas Grotesk Web', Arial, sans-serif;
 }
 
 .chart__hed {
   font-weight: bold;
-  text-align: center; 
+  text-align: center;
+  margin-top: 6rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 100;
+  max-width: 100%;
+  font-family: 'Canela Web';
+  margin-top: 4rem;
 }
 
 /* SMULT */
-.chart__smult {
-  
-}
+.chart__smult {margin-top: 2rem;}
 
 .bar--women {
   fill: #0C4B4A;
@@ -184,7 +219,7 @@ main {
 
 /* GENDER */
 .chart__gender {
-  
+
 }
 
 .chart .tooltip {
@@ -276,7 +311,7 @@ main {
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 0.05em;
-} 
+}
 
 .chart__gender .axis path {
   display: none;
@@ -297,7 +332,7 @@ main {
 }
 
 .chart__mfa .axis path {
-  display: none;
+    display: none;
 }
 
 .chart__mfa rect {
@@ -306,12 +341,14 @@ main {
 
 
 .chart__mfa text {
-  font-size: 12px;
+  font-size: .7rem;
+  font-weight: 500;
 }
 
 .chart__mfa .axis--y line {
     stroke-dasharray: 4px 4px;
     stroke-opacity: 0.2;
+    shape-rendering: crispEdges;
 }
 
 .chart__mfa .axis--y .tick:nth-child(2) {
@@ -328,7 +365,8 @@ main {
 }
 
 .chart__gender .axis text {
-    font-size: 10px;
+    font-size: .7rem;
+    font-weight: 500;
 }
 
 .chart__gender .interaction {
@@ -342,7 +380,7 @@ main {
 
 /* GENRE */
 .chart__genre {
-  
+
 }
 
 .chart__genre text {
@@ -354,7 +392,8 @@ main {
 }
 
 .chart__genre .axis text {
-    font-size: 10px;
+    font-size: .7rem;
+    font-weight: 500;
 }
 
 .chart__genre .area {
@@ -394,11 +433,11 @@ main {
 .toggle {
   margin: 1rem auto;
   text-align: center;
+  margin-top: 0px;
 }
 
 .toggle li {
   display: inline-block;
-  margin: 0 0.2rem;
 }
 
 .chart__tables .btn {
@@ -407,7 +446,7 @@ main {
 }
 
 .chart__tables .toggle li {
-  margin: 0.1rem;
+  /* margin: 0.1rem; */
 }
 
 .chart__genre .mobile-legend {
@@ -431,7 +470,11 @@ main {
 .notice li {
   list-style-type: circle;
   margin-left: 1rem;
-  font-size: 1rem;
+  font-size: .9rem;
+  margin-bottom: 1rem;
+  font-family: 'Atlas Grotesk Web';
+  font-weight: 400;
+  color: black;
 }
 
 p.no-margin {
@@ -447,6 +490,7 @@ p.no-margin {
 
 .tables__container {
   min-height: 360px;
+  margin-top: 3rem;
 }
 
 .chart__tables table {
@@ -461,6 +505,7 @@ p.no-margin {
   margin-bottom: 0.5rem;
   /*text-align:  center;*/
   width: 100%;
+  display: none;
 }
 
 .chart__tables table.is-active {
@@ -508,9 +553,40 @@ p.no-margin {
   display: none;
 }
 
+.chart__mfa .chart__hed{
+  margin-bottom: 1rem;
+}
+
+
+
+.notice{margin-top: 2rem;margin-bottom: 3rem;}
+.gender__toggle{margin-top: 2rem;}
+
 .methodology {
   border-top: 1px solid #ccc;
   padding-top: 0.5rem;
+}
+
+.label--y{
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.front-curve{
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.back-curve{
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+text.label--no-data{letter-spacing: 1px;}
+
+.chart__mfa .bar{fill-opacity: 1;}
+.degrees-g .bar{
+  fill: #484848;
 }
 
 @media only screen and (min-width: 700px) {
@@ -548,7 +624,7 @@ p.no-margin {
   }
 
   .chart__tables .toggle li {
-    margin: 0.2rem;
+    /* margin: 0.2rem; */
   }
 
   .chart__tables .btn {
@@ -561,7 +637,7 @@ p.no-margin {
     display: none;
   }
   .intro__hed {
-    font-size: 4rem;
+    font-size: 8rem;
   }
 }
 @media only screen and (min-width: 60em) {
@@ -570,3 +646,20 @@ p.no-margin {
   }
 }
 
+@media only screen and (max-width: 500px) {
+  .chart__genre text.label--y{font-size: 9px;letter-spacing: 0px;}
+  .chart__genre .axis text{
+    font-size: 9px;
+  }
+  .chart__smult{
+    margin-bottom: 0px;
+  }
+  text.label--no-data{
+    letter-spacing: 0px;
+    font-size: 10px;
+  }
+  .intro__hed{
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+}

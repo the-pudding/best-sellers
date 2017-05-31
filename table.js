@@ -72,13 +72,13 @@
 				td.style('font-weight', 'bold')
 			}
 
-							
+
 		})
 
 		var li = tableToggle.selectAll('li')
 			.data(tableData)
 		.enter().append('li')
-		
+
 		li.append('button')
 			.attr('class', 'btn toggle__button xxx-small')
 			.attr('value', function(d) { return d.key })
@@ -91,7 +91,7 @@
 			.classed('is-active', false)
 
 		d3.select(this).classed('is-active', true)
-		
+
 		chart.selectAll('table')
 			.classed('is-active', false)
 
@@ -101,6 +101,19 @@
 
 	function setupEvents() {
 		chart.selectAll('.toggle__button').on('click', handleToggle)
+		chart.selectAll('.toggle__button')
+			.classed("front-curve",function(d,i){
+				if(i==0){
+					return true;
+				}
+				return false;
+			})
+			.classed("back-curve",function(d,i){
+				if(i==chart.selectAll('.toggle__button').size()-1){
+					return true;
+				}
+				return false;
+			})
 	}
 
 	function init() {

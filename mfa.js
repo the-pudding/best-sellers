@@ -57,13 +57,13 @@
 			.enter()
 			.append('g')
 			.attr('class', 'stack')
-			.attr("fill", function(d) { 
+			.attr("fill", function(d) {
 	      		return scales.color(d.key);
 	      	})
 			.selectAll('.bar')
-			.data(function(d){ 
-				console.log(d) 
-				return d 
+			.data(function(d){
+				console.log(d)
+				return d
 			})
 			.enter()
 			.append('rect')
@@ -169,7 +169,7 @@
 		svgDegrees.select(".label--no-data")
 			.attr('x',scales.x(d3.timeParse('%Y')(1992)))
 			.attr('y',scales.yLine('200'))
-			.style('fill',"#CFCFCF")
+			// .style('fill',"#CFCFCF")
 
 		svgGenders.select(".label--men")
 			.attr('x',scales.x(d3.timeParse('%Y')(1992)))
@@ -211,11 +211,11 @@
 
 
 		var translateArea = "translate(" + margin.left + "," + margin.top +")"
-		
+
 		var gArea = svgGenders.select('.genders-g')
 
 		gArea.attr('transform',translateArea)
-			
+
 
 		updateScales()
 		drawAxes()
@@ -230,7 +230,7 @@
     			return chartHeight - scales.yLine(d.total)
     		})
     		.attr('width', getBandwidth())
-    		.attr('fill','#7F658B')
+    		// .attr('fill','#7F658B')
 
     	gArea.selectAll('.bar')
        		.attr('x', function(d){ return scales.x(d.data.year)})
