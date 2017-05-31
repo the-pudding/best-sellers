@@ -484,7 +484,7 @@
        	chart.select(".vertical")
        		.style('visibility', 'visible')
 
-       	console.log(key)
+       	// console.log(key)
        	chart.selectAll('.area')
        		.classed('is-active', function(d) {
        			return d.key === key;

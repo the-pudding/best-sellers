@@ -62,7 +62,7 @@
 	      	})
 			.selectAll('.bar')
 			.data(function(d){
-				console.log(d)
+				// console.log(d)
 				return d
 			})
 			.enter()
@@ -116,7 +116,7 @@
 	}
 
 	function updateScales(){
-		console.log("updateScales")
+		// console.log("updateScales")
 		scales.x.range([0, chartWidth]);
 		scales.yLine.range([chartHeight,0]);
 		scales.yArea.range([chartHeight,0]);
@@ -129,7 +129,7 @@
   	}
 
 	function drawAxes() {
-		console.log("updateAxes")
+		// console.log("updateAxes")
 		var xTickCount = mobile ? 3 : 5
 		var yTickCount = mobile ? 3 : 5
 
@@ -151,7 +151,7 @@
 			.attr("transform", "translate(0," + chartHeight + ")")
 			.call(axisX)
 
-		console.log(yTickCount)
+		// console.log(yTickCount)
 		var axisYArea = d3.axisLeft(scales.yArea)
 			.ticks(yTickCount,"%")
 			.tickSizeInner(-chartWidth)
@@ -185,7 +185,7 @@
 
 
 	function updateChart() {
-		console.log("updateChart")
+		// console.log("updateChart")
 		var divWidth = chartDiv.node().offsetWidth
 		var divHeight =  Math.floor(divWidth / ratio)
 
@@ -195,8 +195,8 @@
 		chartWidth = svgWidth - margin.left - margin.right
 		chartHeight = svgHeight - margin.top - margin.bottom
 
-		console.log("svgHeight",svgHeight)
-		console.log("chartHeight",chartHeight)
+		// console.log("svgHeight",svgHeight)
+		// console.log("chartHeight",chartHeight)
 
 		var translateLine = "translate(" + margin.left + "," + margin.top +")"
 		gLine = svgDegrees.select('.degrees-g')
@@ -242,10 +242,10 @@
 
 	function init() {
 		loadData(function() {
-			console.log("inside callback")
+			// console.log("inside callback")
 			setupScales()
 			setupElements()
-			console.log(scales)
+			// console.log(scales)
 			resize() // draw chart
 //			setupEvents()
 			window.addEventListener('resize', resize)

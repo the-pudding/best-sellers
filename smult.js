@@ -347,7 +347,7 @@
 		  })
 		  .annotations(annotations)
 
-		console.log("annotations-1",mobile)
+		// console.log("annotations-1",mobile)
 		svg.select('.annotations-1')
 			.call(makeAnnotations)
 			.classed('is-hidden', mobile)
