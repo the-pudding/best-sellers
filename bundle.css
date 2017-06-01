@@ -38,8 +38,8 @@ blockquote p {
 .story__text .exchange {
   /*background-color: #EC7E6B;*/
   /*border-radius: 3px;*/
-  margin-top: 4rem;
-  margin-bottom: 4rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 .story__text .exchange p {
   text-align: center;
@@ -54,7 +54,7 @@ blockquote p {
   max-width: 55rem;
   margin: 0 auto;
   font-size: 4rem;
-  margin-bottom: 6rem;
+  margin-bottom: 2rem;
   text-align: center;
   margin-top: 9rem;
 }
@@ -64,10 +64,11 @@ blockquote p {
   margin-bottom: 1rem;
 }
 .intro__dek {
-  font-size: 1rem;
+  font-size: 1.2rem;
   max-width: 40rem;
   margin: 0 auto;
-  margin-top: 4rem;
+  text-align: center;
+  margin-bottom: 4rem;
 }
 /* STORY */
 main {
@@ -130,7 +131,7 @@ main {
   max-width: 60rem;
   margin: 0 auto;
   position: relative;
-  margin-bottom: 4rem;
+  margin-bottom: 0rem;
 }
 
 .chart path {
@@ -218,9 +219,7 @@ main {
 }
 
 /* GENDER */
-.chart__gender {
-
-}
+.chart__gender {margin-bottom: 0rem;}
 
 .chart .tooltip {
   position: absolute;
@@ -589,6 +588,18 @@ text.label--no-data{letter-spacing: 1px;}
   fill: #484848;
 }
 
+p.note{
+  font-family: 'Atlas Grotesk Web';
+  font-size: .75rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  color: #1b1b1b;
+}
+.methodology-section{
+  border-bottom: 1px solid #ccc;
+}
+
 @media only screen and (min-width: 700px) {
   .chart__genre .mobile-legend {
     display: none;
@@ -666,5 +677,9 @@ text.label--no-data{letter-spacing: 1px;}
   .intro__hed{
     margin-top: 0px;
     margin-bottom: 0px;
+  }
+  .intro__dek{
+    font-size: 1rem;
+    margin-top: 1rem;
   }
 }
