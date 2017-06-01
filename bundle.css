@@ -57,6 +57,7 @@ blockquote p {
   margin-bottom: 2rem;
   text-align: center;
   margin-top: 9rem;
+  line-height: 1;
 }
 .intro__byline {
   font-size: 0.85rem;
