@@ -7,11 +7,12 @@
 	var countMax = 0;
 	var width = 0;
 	var height = 0;
-	var scales = {};
+	var scale = null;
 	var chart = d3.select('.chart__smult');
 	var svg = chart.select('svg');
 	var state = 'percent';
 	var fontSize = 12;
+	var textWidth = 28;
 
 	var annotations = [{
 		note: {
@@ -19,7 +20,7 @@
 			label: "1/4 of female-authored Horror/Paranormal fiction in the 2010s is also Romance",
 			wrap: 180,
 		},
-		data: { genre: 'Horror/Paranormal', decade: 2010, percent: 0.52 },
+		data: { genre: 'Horror/Paranormal', decade: 2010, percent: 0.55 },
 		px: 15,
 		py: -2
 	}, {
@@ -28,7 +29,7 @@
 			label: "Most Mystery books by women on the list in the 1970s were by Agatha Christie",
 			wrap: 180,
 		},
-		data: { genre: 'Mystery', decade: 1970, percent: 0.4 },
+		data: { genre: 'Mystery', decade: 1970, percent: 0.41 },
 		px: 12,
 		py: 3
 	}]
@@ -39,7 +40,7 @@
 			label: "Consistently male-dominated genres",
 			wrap: 120,
 		},
-		data: { genreFrom: 'Spy/Politics', genreTo: 'Suspense', decadeFrom: 1950, decadeTo: 2010, percent: 0.3, dir: 1 },
+		data: { genreFrom: 'Spy/Politics', genreTo: 'Suspense', decadeFrom: 1950, decadeTo: 2010, percent: .39, dir: 1, flip: true },
 		px: 3,
 		py: 3
 	},  {
@@ -48,7 +49,7 @@
 			label: "Relatively small genres, but gender balanced or female-dominated",
 			wrap: 120,
 		},
-		data: { genreFrom: 'Historical', genreTo: 'Domestic', decadeFrom: 1950, decadeTo: 2010, percent: -0.7, dir: -1 },
+		data: { genreFrom: 'Historical', genreTo: 'Domestic', decadeFrom: 1950, decadeTo: 2010, percent: 0.83, dir: -1 },
 		px: -2,
 		py: -3
 	}, {
@@ -57,7 +58,7 @@
 			label: "Most best-selling books are in this category, and it closely matches the overall gender ratio",
 			wrap: 120,
 		},
-		data: { genreFrom: 'Literary/None', genreTo: 'Literary/None', decadeFrom: 1950, decadeTo: 2010, percent: -0.73, dir: -1 },
+		data: { genreFrom: 'Literary/None', genreTo: 'Literary/None', decadeFrom: 1950, decadeTo: 2010, percent: 0.86, dir: -1 },
 		px: -2,
 		py: -3,
 	}]
@@ -196,7 +197,7 @@
       		.attr('class', 'decade__percent decade__percent--men')
     		.attr('text-anchor', 'end')
     		.attr('alignment-baseline', 'middle')
-    		.classed('is-visible', function(d) { return d.percentW })
+    		.classed('is-visible', function(d) { return d.percentM })
     		.text(function(d) { return formatPercent(d.percentM) });
 
     	g.append('g')
@@ -208,9 +209,7 @@
 	}
 
 	function setupScales() {
-		// scales.y = d3.scaleTime().domain([d3.timeParse("%Y")("1945"),d3.timeParse("%Y")("2025")]);
-  		scales.count = d3.scaleLinear().domain([-countMax, countMax])
-  		scales.percent = d3.scaleLinear().domain([-1, 1])
+		scale = d3.scaleLinear().domain([0, 1])
 	}
 
 	function setupChart() {
@@ -220,25 +219,11 @@
 	}
 
 	//UPDATE
-	function getBandwidth() {
-		var dom = scales.y
-      	r = dom(d3.timeParse("%Y")("2025")) - dom(d3.timeParse("%Y")("1945"));
-    	return Math.abs(r/9);
-  	}
 
 	function updateScales(){
-		scales.count.range([0, width]);
-		scales.percent.range([0, width]);
-		// scales.y.range([0, height]);
+		scale.range([0, width / 2 - textWidth]);
 	}
 
-	function drawAxes(g){
-		g.select('.axis--y')
-	    	.call(d3.axisLeft(scales.y).ticks(7));
-
-  		g.select('.axis--x')
-		    .call(d3.axisTop(scales.x).ticks(6, "%"));
-	}
 
 	function updateChart() {
 		// var margin = {top:25,bottom:10,left:33,right:20}
@@ -247,7 +232,6 @@
 		var barHeight = fontSize / 2;
 		var genrePadding = fontSize * 5;
 		var decadePadding = fontSize / 1.25;
-		var textWidth = 20;
 		var titleOffset = 18;
 
 		var numDecades = Math.floor((decadeExtent[1] - decadeExtent[0]) / 10);
@@ -291,29 +275,22 @@
 
       	decade.select('.bar--women')
       		.attr('x', width / 2 + textWidth)
-      		.attr('width', function(d) {
-      			var v = scales[state](d[state + 'W']) - (width / 2)
-      			return Math.max(v, 0)
-      		})
+      		.attr('width', function(d) { return scale(d.percentW) });
+      			
 
       	decade.select('.decade__percent--women')
-      		.attr('x', function(d) { 
-      			return scales[state](d[state + 'W']) + textWidth * 1.25
-      		})
+					.attr('x', function (d) { return scale(d.percentW) + width / 2 + textWidth * 1.25 });
       	
 
       	decade.select('.bar--men')
       		.attr('x', function(d) {
-      			return scales[state](-d[state + 'M'])
+      			return width / 2 - textWidth - scale(d.percentM);
       		})
-      		.attr('width', function(d) {
-      			var v = (width / 2) - scales[state](-d[state + 'M']) - textWidth
-      			return Math.max(v, 0)
-      		})
+					.attr('width', function (d) { return scale(d.percentM) });
       	
       	decade.select('.decade__percent--men')
       		.attr('x', function(d) {
-      			return scales[state](-d[state + 'M']) - textWidth * 0.25
+						return width / 2 - textWidth * 1.25 - scale(d.percentM);
       		})
 
       	decade.select('.decade__year')
@@ -333,9 +310,11 @@
 		  .type(type)
 		  .accessors({
 		    x: function(d) {
-		    	var x = scales.percent(d.percent)
-		    	var buffer = d.percent ? 0 : textWidth * 3 * d.dir
-		    	return x + buffer
+		    	var w = scale(d.percent)
+		    	// var buffer = d.percent ? 0 : textWidth * 3 * d.dir
+					var x = w + width / 2 + textWidth;
+					return x;
+		    	// return x + buffer
 		    },
 		    y: function(d) {
 		    	var i = smultData.findIndex(function(v) { return v.key === d.genre })
@@ -360,7 +339,7 @@
 
       	// var offset = Math.round(width * 0.01)
       	annotations2.forEach(function(d) {
-      		var x = scales.percent(d.data.percent) + textWidth * 3 * d.data.dir
+      		var x = scale(d.data.percent) + textWidth * 3 * d.data.dir
       		var i1 = smultData.findIndex(function(v) { return v.key === d.data.genreFrom })
 	    	var y1 = i1 * (decadeHeight + genrePadding);
 	    	var index1 = Math.floor((d.data.decadeFrom - decadeExtent[0]) / 10)
@@ -372,14 +351,13 @@
   			var off2 = index2 * (barHeight + decadePadding) + titleOffset;
 
       		d.subject = {
-      			x1: x,
+      			x1: (width / 2) - (d.data.flip ? -scale(d.data.percent) - textWidth : scale(d.data.percent) + textWidth + 5),
       			y1: y1 + off1,
-      			x2: x,
+						x2: (width / 2) - (d.data.flip ? -scale(d.data.percent) - textWidth : scale(d.data.percent) + textWidth + 5),
       			y2: y2 + off2,
       		}
-
-      		d.dx = offset * d.px
-      		d.dy = offset * d.py
+      		d.dx = d.data.flip ? 10 : -10;
+      		d.dy = -10;
 
       		// console.log(d)
       	})
@@ -389,9 +367,10 @@
 		  .type(type2)
 		  .accessors({
 		    x: function(d) {
-		    	var x = scales.percent(d.percent)
-		    	var buffer = textWidth * 3 * d.dir
-		    	return x + buffer
+		    	var w = scale(d.percent)
+					var x = width / 2 - textWidth * 1.25 - w;
+					if (d.flip) x = w + width / 2 + textWidth;
+					return x;
 		    },
 		    y: function(d) {
 		    	var i1 = smultData.findIndex(function(v) { return v.key === d.genreFrom })
